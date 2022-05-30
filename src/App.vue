@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <Container />
   </div>
 </template>
 
 <script>
+import Container from './components/layout/Container'
+
 export default {
-  name: 'App'
+  name: 'App',
+  component: Container,
+  components: { Container }
 }
 </script>
 
