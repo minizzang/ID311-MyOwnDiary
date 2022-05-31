@@ -9,7 +9,6 @@ import Container from './components/layout/Container'
 
 export default {
   name: 'App',
-  component: Container,
   components: { Container }
 }
 </script>
@@ -21,6 +20,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
