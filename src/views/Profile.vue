@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Profile page</h1>
       <b-container>
       <b-row>
@@ -16,3 +16,6 @@ export default {
 
 }
 </script>
+
+<style scoped>
+</style>
