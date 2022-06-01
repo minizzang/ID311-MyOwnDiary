@@ -45,7 +45,9 @@ export default {
   },
   computed: {
     routeTab () {
-      return router.replace(this.path)
+      if (router.currentRoute.path !== this.path) {
+        return router.replace(this.path)
+      }
     }
   },
   methods: {

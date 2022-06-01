@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <b-container fluid>
       <!-- <b-row>
         <b-col>
@@ -21,25 +21,23 @@
       </b-row>
     </b-container>
     <br/>
-    <UplodedImage class="uploadedImage"/>
-
+    <Canvas class="canvas"/>
     <br/>
     <Textarea class="textarea" />
     <br/>
-
   </div>
 </template>
 
 <script>
 import Mood from './DiaryMood.vue'
 import Textarea from './DiaryTextarea'
-import UplodedImage from './DiaryImage'
+import Canvas from './Canvas'
 
 export default {
   components: {
     Mood,
     Textarea,
-    UplodedImage
+    Canvas
   },
   data () {
     return {
@@ -49,10 +47,13 @@ export default {
 }
 </script>
 
-<style>
-* {
-  font-family: 'Handlee', cursive;
-  }
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .textarea {
   margin-left: 5em;
   margin-right: 5em;
@@ -69,7 +70,7 @@ h2 {
 .left2 {
   margin-left: 3em;
 }
-.uploadedImage {
+.canvas {
   width: 25em;
 }
 </style>

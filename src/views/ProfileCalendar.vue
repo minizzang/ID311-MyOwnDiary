@@ -1,5 +1,5 @@
 <template>
-  <b-calendar block v-model="value" value-as-date locale="en">
+  <b-calendar block v-model="value" value-as-date locale="en">  <!-- hide header?-->
     <div class="d-flex justify-content-between" dir="ltr">
       <b-button
         size="sm"
