@@ -144,4 +144,5 @@ export default {
 .tab-clicked {
   background-color: #ffffff;
 }
+
 </style>

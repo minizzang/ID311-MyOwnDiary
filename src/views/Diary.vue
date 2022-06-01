@@ -1,30 +1,75 @@
 <template>
-  <!-- <div>
-    <b-calendar class="border rounded p-2" locale="en"></b-calendar>
-    <slot>
-      <WriteDiary />
-    </slot>
-  </div> -->
   <div>
-    <b-container>
-      <b-row align-h="center">
-        <b-col cols="1" md="md">
-          <Calendar/>
+    <b-container fluid>
+      <!-- <b-row>
+        <b-col>
+          <h1 style="text-decoration: underline; text-underline-position:under;" class="top">✍️ How was your day?</h1>
         </b-col>
-        <b-col cols="2" md="md">
-          <WriteDiary/>
+
+      </b-row>
+      <br/> -->
+      <b-row class="top3">
+        <b-col cols="1" class="left2">
+          <h3>Title: </h3>
+        </b-col>
+        <b-col cols="5">
+          <b-form-input v-model="text" placeholder="Enter the Title"></b-form-input>
+        </b-col>
+        <b-col>
+          <Mood/>
         </b-col>
       </b-row>
     </b-container>
+    <br/>
+    <UplodedImage class="uploadedImage"/>
+
+    <br/>
+    <Textarea class="textarea" />
+    <br/>
+
   </div>
 </template>
 
 <script>
-import Calendar from './Calendar.vue'
-import WriteDiary from './WriteDiary.vue'
+import Mood from './DiaryMood.vue'
+import Textarea from './DiaryTextarea'
+import UplodedImage from './DiaryImage'
 
 export default {
-  name: 'diary',
-  components: { WriteDiary, Calendar }
+  components: {
+    Mood,
+    Textarea,
+    UplodedImage
+  },
+  data () {
+    return {
+      text: ''
+    }
+  }
 }
 </script>
+
+<style>
+* {
+  font-family: 'Handlee', cursive;
+  }
+.textarea {
+  margin-left: 5em;
+  margin-right: 5em;
+}
+h2 {
+  text-align: left;
+}
+.top {
+  margin-top: 1em;
+}
+.top3 {
+  margin-top: 3em;
+}
+.left2 {
+  margin-left: 3em;
+}
+.uploadedImage {
+  width: 25em;
+}
+</style>
