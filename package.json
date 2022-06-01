@@ -13,8 +13,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@beauagst/vue-whiteboard": "^0.1.6",
+    "axios": "^0.27.2",
     "bootstrap": "5.1.3",
     "bootstrap-vue": "2.22.0",
+    "google-fonts-webpack-plugin": "^0.4.4",
     "vue": "2.6.14",
     "vue-router": "^3.0.1"
   },
