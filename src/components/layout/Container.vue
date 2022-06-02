@@ -7,13 +7,13 @@
           <router-view class="box middle"/>
           <div class="right">
             <button class="tab"
-              @click="path = '/diary', routeTab" active
+              @click="path = '/diary'; routeTab; setClicked($event)" active
             >Diary</button>
             <button class="tab"
-              @click="path = '/todo', routeTab"
+              @click="path = '/todo'; routeTab; setClicked($event)"
             >Todo</button>
             <button class="tab"
-              @click="path = '/memo', routeTab"
+              @click="path = '/memo'; routeTab; setClicked($event)"
             >Memo</button>
           </div>
           <div class="ring ring1"/>
@@ -51,8 +51,14 @@ export default {
     }
   },
   methods: {
-    goTo () {
-      alert(this.path)
+    setClicked (e) {
+      const tabs = Array.from(document.getElementsByClassName('tab'))
+      tabs.forEach((t) => {
+        if (t.classList.contains('active')) {
+          t.classList.remove('active')
+        }
+      })
+      e.target.classList.add('active')
     }
   }
 }
@@ -144,7 +150,9 @@ export default {
   background-color: #ffffff;
 }
 .tab-clicked {
+  background-color: #c92323;
+}
+.active {
   background-color: #ffffff;
 }
-
 </style>
