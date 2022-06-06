@@ -1,93 +1,148 @@
 <template>
   <div class="container">
-    <canvas id="canvas" width="500" height="300"></canvas>
-    <div class="row-box">
+    <canvas id="sketch" width="500" height="300"></canvas>
+    <div class="col-box">
+      <div class="row-box">
+        <font-awesome-icon icon="fa-solid fa-paintbrush" class="icon selected" v-on:click="setIconClicked($event); setDrawType(true)"
+                            style="margin-right: 2px;"/>
+        <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="icon" v-on:click=" setIconClicked($event);setDrawType(false)"/>
+      </div>
+      <div class="stroke-box">
+        <div class="icon-box selected" v-on:click="setStrokeWidthClicked($event); setStrokeSize(2)">
+          <div class="stroke" style="height: 2px; border-radius: 1px"></div>
+        </div>
+        <div class="icon-box" v-on:click="setStrokeWidthClicked($event); setStrokeSize(5)">
+          <div class="stroke" style="height: 5px; border-radius: 2.5px"></div>
+        </div>
+        <div class="icon-box" v-on:click="setStrokeWidthClicked($event); setStrokeSize(8)">
+          <div class="stroke" style="height: 9px; border-radius: 4.5px"></div>
+        </div>
+      </div>
+      <div class="color-box" ref="colorPicker">
+        <Chrome id="chromePicker" v-model="colorPick" v-if="displayPicker"></Chrome>
+        <div class="color-circle" @click="clickPicker" style="background-color: #000"></div>
+      </div>
+      <div>
+        <label for="addImage">
+          <font-awesome-icon icon="fa-solid fa-image" class="image-icon center"/>
+        </label>
+      </div>
       <input
-        type="range"
-        id="strokeRange"
-        min="0.5"
-        max="10"
-        step="0.1"
-        v-model="strokeSize"/>
-      <button id="brush" v-on:click="setDrawType($event)">brush</button>
-      <button id="fill" v-on:click="setDrawType($event)">fill</button>
-      <div id="black" class="color" style="background-color: #000"></div>
-      <div id="white" class="color" style="background-color: #fff"></div>
-      <div id="red" class="color" style="background-color: rgb(255, 45, 45)"></div>
+        id="addImage"
+        ref="fileInput"
+        type="file"
+        accept="image/*"
+        @input="selectImgFile">
+      <button id="clear" v-on:click="clearCanvas">clear all</button>
     </div>
-    <input
-      class="form-control"
-      ref="fileInput"
-      type="file"
-      id="formFileLg"
-      @input="selectImgFile">
-  </div>
+    </div>
 </template>
 
 <script>
+import { fabric } from 'fabric'
+import { Chrome } from 'vue-color'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPaintBrush, faArrowPointer, faImage } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+// declare icons to use
+library.add(faPaintBrush, faArrowPointer, faImage)
+
 export default {
+  components: {
+    Chrome,
+    FontAwesomeIcon
+  },
   data () {
     return {
-      isDrawing: false,
+      isDrawing: true,
       isFill: false, // brush: true, fill: false
-      strokeSize: 3,
-      strokeColor: 'rgb(0,0,0)'
+      strokeSize: 2,
+      colorPick: {
+        hex8: '#000000ff'
+      },
+      displayPicker: false
     }
   },
   methods: {
-    startDrawing () {
-      this.isDrawing = true
+    setColor () {
+      this.canvas.freeDrawingBrush.color = this.colorPick.hex8
+      const color = document.getElementsByClassName('color-circle')
+      color[0].style.backgroundColor = this.colorPick.hex8
     },
-    stopDrawing () {
-      this.isDrawing = false
+    clickPicker () {
+      this.displayPicker ? this.hidePicker() : this.showPicker()
     },
-    mouseMove (event) {
-      const x = event.offsetX
-      const y = event.offsetY
+    showPicker () {
+      document.addEventListener('click', this.documentClick)
+      this.displayPicker = true
+    },
+    hidePicker () {
+      document.removeEventListener('click', this.documentClick)
+      this.displayPicker = false
+    },
+    setStrokeSize (width) {
+      this.strokeSize = width
+      this.canvas.freeDrawingBrush.width = parseInt(this.strokeSize, 10)
+    },
+    setDrawType (bool) {
+      this.canvas.isDrawingMode = bool
+    },
+    clearCanvas () {
+      this.canvas.clear()
+    },
+    documentClick (e) {
+      const picker = this.$refs.colorPicker
+      const target = e.target
 
-      if (!this.isDrawing) {
-        this.ctx.beginPath() // start new line
-        this.ctx.moveTo(x, y) // start point
-      } else {
-        this.ctx.lineTo(x, y)
-        this.ctx.stroke()
+      if (picker !== target && !picker.contains(target)) {
+        this.hidePicker()
       }
     },
-    changeStrokeSize () {
-      const size = this.strokeSize
-      this.ctx.lineWidth = size
-    },
-    setColor (event) {
-      this.strokeColor = event.currentTarget.style.backgroundColor
-      this.ctx.strokeStyle = this.strokeColor
-    },
-    setDrawType (event) {
-      const type = event.currentTarget.id
-      if (type === 'fill') {
-        this.isFill = true
-      } else {
-        this.isFill = false
+    setStrokeWidthClicked (e) {
+      const strokes = Array.from(document.getElementsByClassName('icon-box'))
+      strokes.forEach((t) => {
+        if (t.classList.contains('selected')) {
+          t.classList.remove('selected')
+        }
+      })
+      let target = e.target
+      if (target.classList[0] === 'stroke') {
+        target = target.parentNode
       }
+      target.classList.add('selected')
     },
-    canvasFill () {
-      if (this.isFill) {
-        this.ctx.fillStyle = this.strokeColor
-        this.ctx.fillRect(0, 0, 500, 300)
+    setIconClicked (e) {
+      const icons = Array.from(document.getElementsByClassName('icon'))
+      icons.forEach((i) => {
+        if (i.classList.contains('selected')) {
+          i.classList.remove('selected')
+        }
+      })
+      let target = e.target
+      if (target.classList.length === 0) {
+        target = target.parentNode
       }
+      target.classList.add('selected')
     },
     selectImgFile () {
       let fileInput = this.$refs.fileInput
       let imgFile = fileInput.files
 
       if (imgFile && imgFile[0]) {
+        this.canvas.isDrawingMode = false
         let reader = new FileReader()
 
         reader.onload = e => {
-          const image = new Image()
-          image.src = e.target.result
-          image.onload = () => {
-            this.ctx.drawImage(image, 0, 0)
-          }
+          const imageUrl = e.target.result
+          fabric.Image.fromURL(imageUrl, (img) => {
+            const imgFit = img.set(
+              {left: 0,
+                top: 0,
+                width: img.width,
+                height: img.height})
+            this.canvas.add(imgFit)
+          })
         }
         reader.readAsDataURL(imgFile[0])
         this.$emit('fileInput', imgFile[0])
@@ -95,22 +150,18 @@ export default {
     }
   },
   mounted () {
-    var canvas = document.getElementById('canvas')
-    this.ctx = canvas.getContext('2d')
-    this.ctx.lineWidth = this.strokeSize
+    this.canvas = new fabric.Canvas('sketch', {
+      isDrawingMode: true
+    })
+    this.canvas.freeDrawingBrush = new fabric.PencilBrush(this.canvas)
 
-    canvas.addEventListener('mousemove', this.mouseMove)
-    canvas.addEventListener('mousedown', this.startDrawing)
-    canvas.addEventListener('mouseup', this.stopDrawing)
-    canvas.addEventListener('mouseleave', this.stopDrawing)
-    canvas.addEventListener('click', this.canvasFill)
-
-    var strokeRange = document.getElementById('strokeRange')
-    strokeRange.addEventListener('input', this.changeStrokeSize)
-
-    const colors = document.getElementsByClassName('color')
-    Array.from(colors).forEach((color) =>
-      color.addEventListener('click', this.setColor))
+    // default setting
+    const brush = this.canvas.freeDrawingBrush
+    brush.color = this.colorPick.hex8
+    brush.width = this.strokeSize
+  },
+  watch: {
+    'colorPick': 'setColor'
   }
 }
 </script>
@@ -118,20 +169,91 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
   justify-content: center;
 }
-#canvas {
-  border: 1px solid #000;
+#sketch {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 7px 0px rgba(201,201,201,1);;
+  /* background-color: aqua; */
+}
+.col-box {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  justify-content: center;
+  align-items: center;
 }
 .row-box {
   display: flex;
   flex-direction: row;
 }
-.color {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgb(216, 216, 216);
+.color-circle {
+  width: 35px;
+  height: 35px;
+  border: 4px solid rgb(225, 225, 225);
   border-radius: 50%;
+  cursor: pointer;
+}
+#addImage {
+  width: 0px;
+  visibility: hidden;
+}
+.stroke-box {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.stroke {
+  background-color: black;
+  width: 20px;
+}
+.icon {
+  font-size: 1.2em;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 1px solid grey;
+  padding: 0.4em;
+  cursor: pointer;
+}
+.image-icon {
+  display:inline-block;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.3em;
+  width: 1.3em;
+  height: 1.3em;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.icon-box {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20%;
+  cursor: pointer;
+}
+.selected {
+  background-color: rgb(225, 225, 225);
+}
+.color-box {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#chromePicker {
+  position: absolute;
+}
+#clear {
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid grey;
 }
 </style>

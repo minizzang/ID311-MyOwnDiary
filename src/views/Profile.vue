@@ -3,7 +3,7 @@
     <h1 class="top bold">🌼 Sally's Daily Life 🌼</h1>
     <img thumbnail fluid src="../assets/sallyBrown.png" alt="Profile Image" height="200px" width="300px" class="profile"/>
     <b-row class="justify-content-md-center">
-        <Calendar class="cal"/>
+        <!-- <Calendar class="cal"/> -->
     </b-row>
     <b-row align-h="center" class="top">
       <h3 class="bold">Sally Brown(8), Dancer</h3>
