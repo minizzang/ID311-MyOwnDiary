@@ -6,7 +6,7 @@
           <ProfileVue class="box left"/>
           <router-view class="box middle"/>
           <div class="right">
-            <button class="tab"
+            <button class="tab active"
               @click="path = '/diary'; routeTab; setClicked($event)" active
             >Diary</button>
             <button class="tab"

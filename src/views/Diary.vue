@@ -51,8 +51,8 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
 }
 .textarea {
   margin-left: 5em;

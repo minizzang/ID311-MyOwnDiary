@@ -1,50 +1,52 @@
 <template>
   <div class="container">
     <canvas id="sketch" width="500" height="300"></canvas>
-    <div class="row-box">
-      <input
-        type="range"
-        id="strokeRange"
-        min="2"
-        max="8"
-        step="3"
-        v-model="strokeSize"/>
-      <div class="stroke " style="width: 5px; height: 5px"></div>
-      <div class="stroke" style="width: 10px; height: 10px"></div>
-      <div class="stroke" style="width: 15px; height: 15px"></div>
-      <font-awesome-icon icon="fa-solid fa-paintbrush" class="icon"/>
-      <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="icon"/>
-      <button id="brush" v-on:click="setDrawType(true)">brush</button>
-      <button id="select" v-on:click="setDrawType(false)">select</button>
-      <button id="clear" v-on:click="clearCanvas">clear</button>
-      <div ref="colorPicker">
-        <div class="color-circle" @click="clickPicker" style="background-color: #000"></div>
-        <Chrome id="chromePicker" v-model="colorPick" v-if="displayPicker"></Chrome>
+    <div class="col-box">
+      <div class="row-box">
+        <font-awesome-icon icon="fa-solid fa-paintbrush" class="icon selected" v-on:click="setIconClicked($event); setDrawType(true)"
+                            style="margin-right: 2px;"/>
+        <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="icon" v-on:click=" setIconClicked($event);setDrawType(false)"/>
       </div>
+      <div class="stroke-box">
+        <div class="icon-box selected" v-on:click="setStrokeWidthClicked($event); setStrokeSize(2)">
+          <div class="stroke" style="height: 2px; border-radius: 1px"></div>
+        </div>
+        <div class="icon-box" v-on:click="setStrokeWidthClicked($event); setStrokeSize(5)">
+          <div class="stroke" style="height: 5px; border-radius: 2.5px"></div>
+        </div>
+        <div class="icon-box" v-on:click="setStrokeWidthClicked($event); setStrokeSize(8)">
+          <div class="stroke" style="height: 9px; border-radius: 4.5px"></div>
+        </div>
+      </div>
+      <div class="color-box" ref="colorPicker">
+        <Chrome id="chromePicker" v-model="colorPick" v-if="displayPicker"></Chrome>
+        <div class="color-circle" @click="clickPicker" style="background-color: #000"></div>
+      </div>
+      <div>
+        <label for="addImage">
+          <font-awesome-icon icon="fa-solid fa-image" class="image-icon center"/>
+        </label>
+      </div>
+      <input
+        id="addImage"
+        ref="fileInput"
+        type="file"
+        accept="image/*"
+        @input="selectImgFile">
+      <button id="clear" v-on:click="clearCanvas">clear all</button>
     </div>
-    <div class="button">
-      <label for="addImage">
-        👉 Add Image 👈
-      </label>
     </div>
-    <input
-      id="addImage"
-      ref="fileInput"
-      type="file"
-      accept="image/*"
-      @input="selectImgFile">
-  </div>
 </template>
 
 <script>
 import { fabric } from 'fabric'
 import { Chrome } from 'vue-color'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPaintBrush, faArrowPointer } from '@fortawesome/free-solid-svg-icons'
+import { faPaintBrush, faArrowPointer, faImage } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // declare icons to use
-library.add(faPaintBrush, faArrowPointer)
+library.add(faPaintBrush, faArrowPointer, faImage)
 
 export default {
   components: {
@@ -79,6 +81,10 @@ export default {
       document.removeEventListener('click', this.documentClick)
       this.displayPicker = false
     },
+    setStrokeSize (width) {
+      this.strokeSize = width
+      this.canvas.freeDrawingBrush.width = parseInt(this.strokeSize, 10)
+    },
     setDrawType (bool) {
       this.canvas.isDrawingMode = bool
     },
@@ -93,14 +99,32 @@ export default {
         this.hidePicker()
       }
     },
-    //
-    canvasFill () {
-      if (this.isFill) {
-        this.ctx.fillStyle = this.strokeColor
-        this.ctx.fillRect(0, 0, 500, 300)
+    setStrokeWidthClicked (e) {
+      const strokes = Array.from(document.getElementsByClassName('icon-box'))
+      strokes.forEach((t) => {
+        if (t.classList.contains('selected')) {
+          t.classList.remove('selected')
+        }
+      })
+      let target = e.target
+      if (target.classList[0] === 'stroke') {
+        target = target.parentNode
       }
+      target.classList.add('selected')
     },
-    //
+    setIconClicked (e) {
+      const icons = Array.from(document.getElementsByClassName('icon'))
+      icons.forEach((i) => {
+        if (i.classList.contains('selected')) {
+          i.classList.remove('selected')
+        }
+      })
+      let target = e.target
+      if (target.classList.length === 0) {
+        target = target.parentNode
+      }
+      target.classList.add('selected')
+    },
     selectImgFile () {
       let fileInput = this.$refs.fileInput
       let imgFile = fileInput.files
@@ -135,11 +159,6 @@ export default {
     const brush = this.canvas.freeDrawingBrush
     brush.color = this.colorPick.hex8
     brush.width = this.strokeSize
-
-    var strokeRange = document.getElementById('strokeRange')
-    strokeRange.addEventListener('input', () => {
-      this.canvas.freeDrawingBrush.width = parseInt(this.strokeSize, 10)
-    })
   },
   watch: {
     'colorPick': 'setColor'
@@ -150,32 +169,47 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
   justify-content: center;
-  flex-direction: column;
 }
 #sketch {
+  width: 100%;
+  height: 300px;
   border-radius: 10px;
   box-shadow: 2px 2px 7px 0px rgba(201,201,201,1);;
+  /* background-color: aqua; */
+}
+.col-box {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  justify-content: center;
+  align-items: center;
 }
 .row-box {
   display: flex;
   flex-direction: row;
 }
 .color-circle {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgb(216, 216, 216);
+  width: 35px;
+  height: 35px;
+  border: 4px solid rgb(225, 225, 225);
   border-radius: 50%;
+  cursor: pointer;
 }
 #addImage {
+  width: 0px;
   visibility: hidden;
+}
+.stroke-box {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 .stroke {
   background-color: black;
   width: 20px;
-  height: 20px;
-  border-radius: 50%;
 }
 .icon {
   font-size: 1.2em;
@@ -183,6 +217,43 @@ export default {
   height: 1em;
   border-radius: 50%;
   border: 1px solid grey;
-  padding: 0.4em
+  padding: 0.4em;
+  cursor: pointer;
+}
+.image-icon {
+  display:inline-block;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.3em;
+  width: 1.3em;
+  height: 1.3em;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.icon-box {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20%;
+  cursor: pointer;
+}
+.selected {
+  background-color: rgb(225, 225, 225);
+}
+.color-box {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#chromePicker {
+  position: absolute;
+}
+#clear {
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid grey;
 }
 </style>
