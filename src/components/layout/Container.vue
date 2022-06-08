@@ -15,6 +15,9 @@
             <button class="tab"
               @click="path = '/memo'; routeTab; setClicked($event)"
             >Memo</button>
+            <button class="tab"
+              @click="path = '/login'; routeTab; setClicked($event)"
+            >Login</button>
           </div>
           <div class="ring ring1"/>
           <div class="ring ring2"/>

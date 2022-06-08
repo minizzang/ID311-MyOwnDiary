@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Diary from '@/views/Diary'
 import Todo from '@/views/Todo'
 import Memo from '@/views/Memo'
+import Login from '@/views/Login'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/memo',
       name: 'Memo',
       component: Memo
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
