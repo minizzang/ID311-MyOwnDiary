@@ -1,15 +1,16 @@
 <template>
   <div class="container">
-    <h1>Memo page</h1>
+    <MemoOne/>
   </div>
 </template>
 
 <script>
+import MemoOne from './MemoOne.vue'
+
 export default {
+  components: { MemoOne }
 }
 </script>
 
 <style scoped>
-.container {
-}
 </style>
