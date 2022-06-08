@@ -47,8 +47,10 @@ export default {
   },
   computed: {
     routeTab () {
-      if (router.currentRoute.path !== this.path) {
-        return router.replace(this.path)
+      if (this.$auth.currentUser !== null) {
+        if (router.currentRoute.path !== this.path) {
+          return router.replace(this.path)
+        }
       }
     }
   },
