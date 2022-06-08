@@ -4,6 +4,9 @@ import Diary from '@/views/Diary'
 import Todo from '@/views/Todo'
 import Memo from '@/views/Memo'
 
+// import Category from '../views/MemoCategory.Vue'
+// import Notes from '../views/MemoNote.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,5 +28,19 @@ export default new Router({
       name: 'Memo',
       component: Memo
     }
+    // {
+    //   path: '/',
+    //   component: Category,
+    //   children: [
+    //     {
+    //       meta: {
+    //         showModal: true
+    //       },
+    //       path: ':categoryId', //the url path is in fact /:cayegoryId (:categoryId == parameter)
+    //       component: Notes,
+    //       props: true //when props is set to true, the route.params will be set as the component props
+    //     }
+    //   ]
+    // },
   ]
 })
