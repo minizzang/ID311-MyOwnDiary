@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <h1 class="top bold">🌼 Sally's Daily Life 🌼</h1>
+    <h3 class="top bold">🌼 Welcome! 🌼</h3>
     <img thumbnail fluid src="../assets/sallyBrown.png" alt="Profile Image" height="200px" width="300px" class="profile"/>
     <b-row class="justify-content-md-center">
-        <!-- <Calendar class="cal"/> -->
+        <Calendar class="cal"/>
     </b-row>
     <b-row align-h="center" class="top">
-      <h3 class="bold">Sally Brown(8), Dancer</h3>
+      <h5 class="bold">Sally Brown (8)</h5>
     </b-row>
     <b-row align-h="center">
-      <h4>"I'll be the world best dancer!"</h4>
+      <h6>"I'll be the world best dancer!"</h6>
     </b-row>
   </div>
 </template>
@@ -50,5 +50,8 @@ export default {
 }
 .bold {
   font-weight: bold;
+}
+.top {
+  margin-top: 1em;
 }
 </style>

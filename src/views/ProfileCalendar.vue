@@ -1,6 +1,7 @@
 <template>
-  <b-calendar block v-model="value" value-as-date locale="en">  <!-- hide header?-->
-    <div class="d-flex justify-content-between" dir="ltr">
+  <b-calendar width="270px" locale="en"
+        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }">  <!-- hide header?-->
+    <!-- <div class="d-flex justify-content-between" dir="ltr">
       <b-button
         size="sm"
         variant="outline-danger"
@@ -17,7 +18,7 @@
       >
         Set Today
       </b-button>
-    </div>
+    </div> -->
   </b-calendar>
 </template>
 
@@ -39,3 +40,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.bcal {
+  width: 500px;
+}
+</style>

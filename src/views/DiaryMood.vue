@@ -20,10 +20,10 @@ export default {
     return {
       selected: 'Very Good',
       options: [
-        { text: ' Perfect!❤️', value: 'Very Good' },
-        { text: ' Nice ~', value: 'second' },
-        { text: ' OK👌', value: 'Just OK' },
-        { text: ' Bad..💦', value: 'Bad' }
+        { text: ' Best ', value: 'Very Good' },
+        { text: ' Nice', value: 'second' },
+        { text: ' OK', value: 'Just OK' },
+        { text: ' Bad', value: 'Bad' }
       ]
     }
   }

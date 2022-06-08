@@ -5,9 +5,10 @@
       v-model="text"
       placeholder="Please describe your day..."
       size="lg"
-      rows="8"
+      rows="6"
       max-rows="6"
     ></b-form-textarea>
+    <br/>
     <div style="float: right;">
         <button class="top">Save</button>
     </div>
