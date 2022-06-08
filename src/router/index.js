@@ -4,6 +4,7 @@ import Diary from '@/views/Diary'
 import Todo from '@/views/Todo'
 import Memo from '@/views/Memo'
 import Login from '@/views/Login'
+import Signup from '@/views/SignUp'
 
 Vue.use(Router)
 
@@ -12,7 +13,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      alias: '/diary',
+      alias: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/diary',
       name: 'Diary',
       component: Diary
     },
@@ -27,9 +33,9 @@ export default new Router({
       component: Memo
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
+      path: '/signup',
+      name: 'Signup',
+      component: Signup
     }
   ]
 })

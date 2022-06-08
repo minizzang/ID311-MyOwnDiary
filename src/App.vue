@@ -9,10 +9,7 @@ import Container from './components/layout/Container'
 
 export default {
   name: 'App',
-  components: { Container },
-  mounted () {
-    console.log(this.$firebase)
-  }
+  components: { Container }
 }
 </script>
 

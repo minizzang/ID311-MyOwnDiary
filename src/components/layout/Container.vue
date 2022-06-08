@@ -1,5 +1,6 @@
 <template>
   <div class="top-container">
+    <button class="btn-logout" @click="signOut()">logout</button>
     <div class="sub-container1">
       <div class="sub-container2">
         <div class="column-box">
@@ -15,9 +16,6 @@
             <button class="tab"
               @click="path = '/memo'; routeTab; setClicked($event)"
             >Memo</button>
-            <button class="tab"
-              @click="path = '/login'; routeTab; setClicked($event)"
-            >Login</button>
           </div>
           <div class="ring ring1"/>
           <div class="ring ring2"/>
@@ -30,6 +28,7 @@
 </template>
 
 <script>
+import { signOut } from '@firebase/auth'
 import router from '../../router'
 import ProfileVue from '../../views/Profile.vue'
 
@@ -37,9 +36,9 @@ export default {
   name: 'container',
   components: { ProfileVue },
   mounted () {
-    if (router.currentRoute.path !== '/diary') {
-      return router.replace('/diary')
-    }
+    // if (router.currentRoute.path !== '/diary') {
+    //   return router.replace('/diary')
+    // }
   },
   data () {
     return {
@@ -62,6 +61,14 @@ export default {
         }
       })
       e.target.classList.add('active')
+    },
+    signOut () {
+      signOut(this.$auth).then(() => {
+        console.log('sign out success')
+        router.replace('./login')
+      }).catch((err) => {
+        console.log(err, 'sign out error!')
+      })
     }
   }
 }
@@ -91,9 +98,14 @@ export default {
   height: 96%;
   display: flex;
   align-items: flex-end;
-  /* justify-content: center; */
+  justify-content: flex-start;
   background-color: #9b75a4;
   border-radius: 10px;
+}
+.btn-logout {
+  position: absolute;
+  right: 20px;
+  top: 10px;
 }
 .column-box {
   display: flex;
