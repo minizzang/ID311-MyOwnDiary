@@ -1,0 +1,13 @@
+[debug] [2022-06-08T15:31:35.702Z] ----------------------------------------------------------------------
+[debug] [2022-06-08T15:31:35.705Z] Command:       D:\Downloads\nodejs\node.exe D:\ID311-Software-prototyping\MyOwnDiary\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2022-06-08T15:31:35.706Z] CLI Version:   11.0.1
+[debug] [2022-06-08T15:31:35.706Z] Platform:      win32
+[debug] [2022-06-08T15:31:35.706Z] Node Version:  v14.18.0
+[debug] [2022-06-08T15:31:35.717Z] Time:          Thu Jun 09 2022 00:31:35 GMT+0900 (대한민국 표준시)
+[debug] [2022-06-08T15:31:35.717Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-06-08T15:31:35.824Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-06-08T15:31:35.824Z] > authorizing via signed-in user (ehtj123@gmail.com)
+[debug] [2022-06-08T15:31:35.824Z] [iam] checking project id311-my-world for permissions ["firebase.projects.get"]
+[debug] [2022-06-08T15:31:35.827Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/id311-my-world:testIamPermissions [none]
+[debug] [2022-06-08T15:31:35.828Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/id311-my-world:testIamPermissions {"permissions":["firebase.projects.get"]}
