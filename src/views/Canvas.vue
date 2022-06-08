@@ -1,11 +1,14 @@
 <template>
   <div class="container">
-    <canvas id="sketch" width="500" height="300"></canvas>
+    <div class="canvas-box">
+      <canvas id="sketch" width="500px" height="300px"></canvas>
+    </div>
     <div class="col-box">
       <div class="row-box">
-        <font-awesome-icon icon="fa-solid fa-paintbrush" class="icon selected" v-on:click="setIconClicked($event); setDrawType(true)"
-                            style="margin-right: 2px;"/>
-        <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="icon" v-on:click=" setIconClicked($event);setDrawType(false)"/>
+        <font-awesome-icon icon="fa-solid fa-paintbrush" class="icon selected"
+          v-on:click="setIconClicked($event); setDrawType(true)" style="margin-right: 2px;" />
+        <font-awesome-icon icon="fa-solid fa-arrow-pointer" class="icon"
+          v-on:click="setIconClicked($event); setDrawType(false)" />
       </div>
       <div class="stroke-box">
         <div class="icon-box selected" v-on:click="setStrokeWidthClicked($event); setStrokeSize(2)">
@@ -24,18 +27,13 @@
       </div>
       <div>
         <label for="addImage">
-          <font-awesome-icon icon="fa-solid fa-image" class="image-icon center"/>
+          <font-awesome-icon icon="fa-solid fa-image" class="image-icon center" />
         </label>
       </div>
-      <input
-        id="addImage"
-        ref="fileInput"
-        type="file"
-        accept="image/*"
-        @input="selectImgFile">
+      <input id="addImage" ref="fileInput" type="file" accept="image/*" @input="selectImgFile">
       <button id="clear" v-on:click="clearCanvas">clear all</button>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -137,10 +135,12 @@ export default {
           const imageUrl = e.target.result
           fabric.Image.fromURL(imageUrl, (img) => {
             const imgFit = img.set(
-              {left: 0,
+              {
+                left: 0,
                 top: 0,
                 width: img.width,
-                height: img.height})
+                height: img.height
+              })
             this.canvas.add(imgFit)
           })
         }
@@ -174,13 +174,20 @@ export default {
   height: 100%;
   justify-content: center;
 }
+
+.canvas-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 #sketch {
-  width: 100%;
-  height: 300px;
   border-radius: 10px;
-  box-shadow: 2px 2px 7px 0px rgba(201,201,201,1);;
+  box-shadow: 2px 2px 7px 0px rgba(201, 201, 201, 1);
+  ;
   /* background-color: aqua; */
 }
+
 .col-box {
   display: flex;
   flex-direction: column;
@@ -188,10 +195,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .row-box {
   display: flex;
   flex-direction: row;
 }
+
 .color-circle {
   width: 35px;
   height: 35px;
@@ -199,18 +208,22 @@ export default {
   border-radius: 50%;
   cursor: pointer;
 }
+
 #addImage {
   width: 0px;
   visibility: hidden;
 }
+
 .stroke-box {
   margin-top: 10px;
   margin-bottom: 5px;
 }
+
 .stroke {
   background-color: black;
   width: 20px;
 }
+
 .icon {
   font-size: 1.2em;
   width: 1em;
@@ -220,8 +233,9 @@ export default {
   padding: 0.4em;
   cursor: pointer;
 }
+
 .image-icon {
-  display:inline-block;
+  display: inline-block;
   text-align: center;
   vertical-align: middle;
   font-size: 1.3em;
@@ -230,6 +244,7 @@ export default {
   cursor: pointer;
   margin-top: 5px;
 }
+
 .icon-box {
   width: 30px;
   height: 30px;
@@ -239,18 +254,22 @@ export default {
   border-radius: 20%;
   cursor: pointer;
 }
+
 .selected {
   background-color: rgb(225, 225, 225);
 }
+
 .color-box {
   display: flex;
   flex-direction: row;
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
 #chromePicker {
   position: absolute;
 }
+
 #clear {
   border-radius: 5px;
   background-color: white;

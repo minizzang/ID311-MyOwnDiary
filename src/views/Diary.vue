@@ -10,7 +10,7 @@
       <br/> -->
       <b-row class="top3">
         <b-col cols="1" class="left2">
-          <h3>Title: </h3>
+          <h4>Title: </h4>
         </b-col>
         <b-col cols="5">
           <b-form-input v-model="text" placeholder="Enter the Title"></b-form-input>
