@@ -3,10 +3,10 @@
     <h3 class="top bold">🌼 Welcome! 🌼</h3>
     <img thumbnail fluid src="../assets/sallyBrown.png" alt="Profile Image" height="200px" width="300px" class="profile"/>
     <b-row align-h="center" class="top">
-      <h5 class="bold">Sally Brown (8)</h5>
+      <h5 class="bold">{{this.userName}}</h5>
     </b-row>
     <b-row align-h="center">
-      <h6>"I'll be the world best dancer!"</h6>
+      <h6>{{this.userIntro}}</h6>
     </b-row>
     <b-row class="justify-content-md-center">
       <div class="test">
@@ -21,12 +21,18 @@
 </template>
 
 <script>
+import { onValue, ref } from '@firebase/database'
 
 export default {
   data () {
     return {
-      value: null
+      value: null,
+      userName: '',
+      userIntro: ''
     }
+  },
+  mounted () {
+    this.getUserInfo()
   },
   methods: {
     setToday () {
@@ -35,6 +41,17 @@ export default {
     },
     clearDate () {
       this.value = ''
+    },
+    getUserInfo () {
+      const uid = this.$auth.currentUser.uid
+      const userNameRef = ref(this.$db, 'users/' + uid + '/nickname')
+      const userIntroRef = ref(this.$db, 'users/' + uid + '/intro')
+      onValue(userNameRef, (snapshot) => {
+        this.userName = snapshot.val()
+      })
+      onValue(userIntroRef, (snapshot) => {
+        this.userIntro = snapshot.val()
+      })
     }
   }
 }

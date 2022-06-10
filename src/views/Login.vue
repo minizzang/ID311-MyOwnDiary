@@ -46,7 +46,9 @@ export default {
     login () {
       signInWithEmailAndPassword(this.$auth, this.email, this.password)
         .then((userCredential) => {
-          // console.log(userCredential.user.uid)
+          const uid = userCredential.user.uid
+          // save uid in localStorage
+          localStorage.setItem('user', uid)
           router.replace('/diary')
         })
         .catch((err) => {

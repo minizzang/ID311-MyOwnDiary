@@ -1,10 +1,11 @@
 <template>
   <div class="top-container">
-    <button class="btn-logout" @click="signOut()">logout</button>
+    <button v-if="this.userSigned" class="btn-logout" @click="signOut()">logout</button>
     <div class="sub-container1">
       <div class="sub-container2">
         <div class="column-box">
-          <ProfileVue class="box left"/>
+          <ProfileVue class="box left" v-if="this.userSigned"/>
+          <div class="box left" v-else>null user : Login!</div>
           <router-view class="box middle"/>
           <div class="right">
             <button class="tab active"
@@ -35,19 +36,31 @@ import ProfileVue from '../../views/Profile.vue'
 export default {
   name: 'container',
   components: { ProfileVue },
+  data () {
+    return {
+      userSigned: false,
+      path: '/diary'
+    }
+  },
   mounted () {
+    const uid = localStorage.getItem('user')
+    uid !== null ? this.userSigned = true : this.userSigned = false
     // if (router.currentRoute.path !== '/diary') {
     //   return router.replace('/diary')
     // }
   },
-  data () {
-    return {
-      path: '/diary'
+  watch: {
+    $route (to, from) {
+      if (from.name === 'Login') { // Login -> show user profile
+        this.userSigned = true
+      } else if (to.name === 'Login') { // Logout
+        this.userSigned = false
+      }
     }
   },
   computed: {
     routeTab () {
-      if (this.$auth.currentUser !== null) {
+      if (this.userSigned) {
         if (router.currentRoute.path !== this.path) {
           return router.replace(this.path)
         }
@@ -68,6 +81,7 @@ export default {
       signOut(this.$auth).then(() => {
         console.log('sign out success')
         router.replace('./login')
+        localStorage.removeItem('user')
       }).catch((err) => {
         console.log(err, 'sign out error!')
       })

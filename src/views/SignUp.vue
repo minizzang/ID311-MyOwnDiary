@@ -135,7 +135,7 @@ export default {
               nickname: this.nickname,
               intro: this.intro
             }).then(() => {
-              router.replace('/diary')
+              router.replace('/login')
             }).catch((err) => {
               console.log(err)
             })
