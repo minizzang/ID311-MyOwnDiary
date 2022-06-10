@@ -15,6 +15,8 @@
           no-title
           color="rgb(255,10,100)"
           @click:date="passDate"
+          :events="savedDayArray"
+          :event-color="getColor"
         ></v-date-picker>
       </div>
     </b-row>
@@ -30,11 +32,14 @@ export default {
       value: null,
       userName: '',
       userIntro: '',
-      pickerDate: new Date().toISOString().substr(0, 10)
+      pickerDate: new Date().toISOString().substr(0, 10),
+      savedDayArray: null,
+      savedDayMoodMap: null
     }
   },
   mounted () {
     this.getUserInfo()
+    this.getSavedDay()
   },
   methods: {
     setToday () {
@@ -57,6 +62,33 @@ export default {
     },
     passDate () { // pass the selected date to Container.vue
       this.$emit('pass', this.pickerDate)
+    },
+    getSavedDay () {
+      console.log('mounted')
+      const array = []
+      array.push('2022-06-02')
+      array.push('2022-06-16')
+      this.savedDayArray = array
+
+      const map = new Map()
+      map.set(array[0], 1)
+      map.set(array[1], 2)
+
+      this.savedDayMoodMap = map
+
+      // event-color="date => this.savedDayMoodMap.get(date) === 1 ? 'rgb(255, 0, 0)' : 'rgb(0, 255, 0)'"
+    },
+    getColor (date) {
+      switch (this.savedDayMoodMap.get(date)) {
+        case 1:
+          return 'rgb(255, 0, 0)'
+        case 2:
+          return 'rgb(0, 255, 0)'
+        case 3:
+          return 'rgb(0, 0, 255)'
+        case 4:
+          return 'rgb(0, 0, 0)'
+      }
     }
   }
 }

@@ -82,10 +82,9 @@ export default {
     saveDiary (imageRef) {
       const uid = localStorage.getItem('user')
       const date = this.props.replace(/-/g, '')
-      console.log(imageRef)
       set(ref(this.$db, 'diary/' + uid + '/' + date), {
         title: this.title,
-        mood: this.moodSelected,
+        mood: this.moodSelected, // todo: mood 숫자로 저장하기
         image: imageRef,
         comment: this.comment
       })
