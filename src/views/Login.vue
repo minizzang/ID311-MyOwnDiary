@@ -46,7 +46,7 @@ export default {
     login () {
       signInWithEmailAndPassword(this.$auth, this.email, this.password)
         .then((userCredential) => {
-          console.log(userCredential.user.uid)
+          // console.log(userCredential.user.uid)
           router.replace('/diary')
         })
         .catch((err) => {
