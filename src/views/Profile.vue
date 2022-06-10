@@ -11,9 +11,10 @@
     <b-row class="justify-content-md-center">
       <div class="test">
         <v-date-picker
-          v-model="picker"
+          v-model="pickerDate"
           no-title
           color="rgb(255,10,100)"
+          @click:date="passDate"
         ></v-date-picker>
       </div>
     </b-row>
@@ -28,7 +29,8 @@ export default {
     return {
       value: null,
       userName: '',
-      userIntro: ''
+      userIntro: '',
+      pickerDate: new Date().toISOString().substr(0, 10)
     }
   },
   mounted () {
@@ -43,7 +45,7 @@ export default {
       this.value = ''
     },
     getUserInfo () {
-      const uid = this.$auth.currentUser.uid
+      const uid = localStorage.getItem('user')
       const userNameRef = ref(this.$db, 'users/' + uid + '/nickname')
       const userIntroRef = ref(this.$db, 'users/' + uid + '/intro')
       onValue(userNameRef, (snapshot) => {
@@ -52,6 +54,9 @@ export default {
       onValue(userIntroRef, (snapshot) => {
         this.userIntro = snapshot.val()
       })
+    },
+    passDate () { // pass the selected date to Container.vue
+      this.$emit('pass', this.pickerDate)
     }
   }
 }

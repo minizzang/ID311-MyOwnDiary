@@ -9,39 +9,86 @@
       </b-row>
       <br/> -->
       <b-row class="top3">
+        <div>{{props}}</div>
         <b-col cols="1" class="left2">
           <h4>Title: </h4>
         </b-col>
         <b-col cols="5">
-          <b-form-input v-model="text" placeholder="Enter the Title"></b-form-input>
+          <b-form-input v-model="title" placeholder="Enter the Title"></b-form-input>
         </b-col>
         <b-col>
-          <Mood/>
+          <b-form-group v-slot="{ ariaDescribedby }">
+            <b-form-radio-group
+              id="btn-radios-1"
+              v-model="moodSelected"
+              :options="moodOptions"
+              :aria-describedby="ariaDescribedby"
+              button-variant="outline-primary"
+              name="plain-inline"
+              buttons
+            ></b-form-radio-group>
+          </b-form-group>
         </b-col>
       </b-row>
     </b-container>
     <br/>
-    <Canvas class="canvas"/>
+    <Canvas class="canvas" ref="canvas" @imageRef="saveDiary"></Canvas>
     <br/>
-    <Textarea class="textarea" />
+    <div class="textarea">
+      <b-form-textarea
+        id="textarea"
+        v-model="comment"
+        placeholder="Please describe your day..."
+        size="lg"
+        rows="6"
+        max-rows="6"
+      ></b-form-textarea>
+      <br/>
+      <div style="float: right;">
+        <button class="top" @click="callCanvas">Save</button>
+      </div>
+    </div>
     <br/>
   </div>
 </template>
 
 <script>
-import Mood from './DiaryMood.vue'
-import Textarea from './DiaryTextarea'
+import { ref, set } from '@firebase/database'
 import Canvas from './Canvas'
 
 export default {
   components: {
-    Mood,
-    Textarea,
     Canvas
   },
   data () {
     return {
-      text: ''
+      title: '',
+      moodSelected: 'Very Good',
+      moodOptions: [
+        { text: ' Best ', value: 'Very Good' },
+        { text: ' Nice', value: 'second' },
+        { text: ' OK', value: 'Just OK' },
+        { text: ' Bad', value: 'Bad' }
+      ],
+      comment: ''
+    }
+  },
+  props: ['props'],
+  methods: {
+    callCanvas () {
+      const date = this.props.replace(/-/g, '') // 2022-06-11 -> 20220611
+      this.$refs.canvas.downloadImage(date)
+    },
+    saveDiary (imageRef) {
+      const uid = localStorage.getItem('user')
+      const date = this.props.replace(/-/g, '')
+      console.log(imageRef)
+      set(ref(this.$db, 'diary/' + uid + '/' + date), {
+        title: this.title,
+        mood: this.moodSelected,
+        image: imageRef,
+        comment: this.comment
+      })
     }
   }
 }
@@ -72,5 +119,8 @@ h2 {
 }
 .canvas {
   width: 25em;
+}
+.saveButton {
+  float: right;
 }
 </style>

@@ -4,9 +4,9 @@
     <div class="sub-container1">
       <div class="sub-container2">
         <div class="column-box">
-          <ProfileVue class="box left" v-if="this.userSigned"/>
+          <ProfileVue class="box left" v-if="this.userSigned" v-on:pass="dateSelect"/>
           <div class="box left" v-else>null user : Login!</div>
-          <router-view class="box middle"/>
+          <router-view class="box middle" v-bind:props="date"/>
           <div class="right">
             <button class="tab active"
               @click="path = '/diary'; routeTab; setClicked($event)" active
@@ -39,7 +39,8 @@ export default {
   data () {
     return {
       userSigned: false,
-      path: '/diary'
+      path: '/diary',
+      date: new Date().toISOString().substr(0, 10)
     }
   },
   mounted () {
@@ -76,6 +77,9 @@ export default {
         }
       })
       e.target.classList.add('active')
+    },
+    dateSelect (val) { // receive date from Profile.vue
+      this.date = val
     },
     signOut () {
       signOut(this.$auth).then(() => {
