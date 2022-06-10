@@ -32,6 +32,7 @@
       </div>
       <input id="addImage" ref="fileInput" type="file" accept="image/*" @input="selectImgFile">
       <button id="clear" v-on:click="clearCanvas">clear all</button>
+      <button v-on:click="downloadImage">download</button>
     </div>
   </div>
 </template>
@@ -42,6 +43,7 @@ import { Chrome } from 'vue-color'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPaintBrush, faArrowPointer, faImage } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { getDownloadURL, ref, uploadString } from '@firebase/storage'
 
 // declare icons to use
 library.add(faPaintBrush, faArrowPointer, faImage)
@@ -147,6 +149,25 @@ export default {
         reader.readAsDataURL(imgFile[0])
         this.$emit('fileInput', imgFile[0])
       }
+    },
+    downloadImage (date) {
+      const ext = 'png' // todo: background 투명->shadow
+      const base64 = this.canvas.toDataURL({
+        format: ext,
+        enableRetinaScaling: true
+      })
+
+      // save the image to storage
+      const uid = localStorage.getItem('user')
+      const path = 'diary/' + uid + '/' + date
+      const imageRef = ref(this.$storage, path)
+      uploadString(imageRef, base64, 'data_url').then((snapshot) => {
+        getDownloadURL(snapshot.ref).then(async (url) => {
+          // emit image link to parent (Diary.vue)
+          this.$emit('imageRef', url)
+        })
+        console.log('image uploaded to firebase storage!')
+      })
     }
   },
   mounted () {

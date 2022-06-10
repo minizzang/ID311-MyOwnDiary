@@ -8,7 +8,7 @@
           <b-form-input
             id="input-email"
             v-model="email"
-            @click="()=>{isEmailValid = false}"
+            @input="()=>{isEmailValid = false}"
             :state="validEmail"
             aria-describedby="input-email-feedback"
             placeholder="example@abc.com"
@@ -26,7 +26,7 @@
             id="input-pw"
             v-model="password"
             :state="validPassword"
-            @click="()=>{isPwValid = false}"
+            @input="()=>{isPwValid = false}"
             type="password"
             aria-describedby="input-pw-feedback"
             placeholder="longer than 5 characters"
@@ -135,7 +135,7 @@ export default {
               nickname: this.nickname,
               intro: this.intro
             }).then(() => {
-              router.replace('/diary')
+              router.replace('/login')
             }).catch((err) => {
               console.log(err)
             })
