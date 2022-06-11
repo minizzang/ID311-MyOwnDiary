@@ -220,7 +220,6 @@ export default {
 #sketch {
   border-radius: 10px;
   box-shadow: 2px 2px 7px 0px rgba(201, 201, 201, 1);
-  ;
   /* background-color: aqua; */
 }
 
