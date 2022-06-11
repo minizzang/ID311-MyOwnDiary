@@ -70,7 +70,7 @@ export default {
       moodSelected: 'Very Good',
       moodOptions: [
         { text: ' Best ', value: 'Very Good' },
-        { text: ' Nice', value: 'second' },
+        { text: ' Nice', value: 'Nice' },
         { text: ' OK', value: 'Just OK' },
         { text: ' Bad', value: 'Bad' }
       ],

@@ -90,11 +90,11 @@ export default {
       switch (this.savedDayMoodMap.get(date)) {
         case 'Very Good':
           return 'rgb(255, 0, 0)'
-        case '2':
+        case 'Nice':
           return 'rgb(0, 255, 0)'
         case 'Just OK':
           return 'rgb(0, 0, 255)'
-        case 4:
+        case 'Bad':
           return 'rgb(0, 0, 0)'
       }
     }
