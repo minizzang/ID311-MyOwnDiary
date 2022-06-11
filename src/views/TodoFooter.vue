@@ -1,7 +1,9 @@
 <template>
-  <div class="clearAllContainer">
-    <span class="clearAllBtn" @click="clearTodo">Clear All</span>
+  <span @click="clearTodo">
+    <div class="clearAllContainer">
+    <p class="clearAllBtn">Clear All</p>
   </div>
+  </span>
 </template>
 
 <script>
