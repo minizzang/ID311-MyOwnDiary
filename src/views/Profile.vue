@@ -17,6 +17,7 @@
           @click:date="passDate"
           :events="savedDayArray"
           :event-color="getColor"
+          :max-date="maxDate"
         ></v-date-picker>
       </div>
     </b-row>
@@ -29,7 +30,7 @@ import { onValue, ref } from '@firebase/database'
 export default {
   data () {
     return {
-      value: null,
+      maxDate: '2022-06-04', // todo: prevent future dates
       userName: '',
       userIntro: '',
       pickerDate: new Date().toISOString().substring(0, 10),
@@ -44,15 +45,9 @@ export default {
     // convert to Korea time zone
     const dt = new Date()
     this.pickerDate = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
+    this.maxDate = this.pickerDate
   },
   methods: {
-    setToday () {
-      const now = new Date()
-      this.value = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    },
-    clearDate () {
-      this.value = ''
-    },
     getUserInfo () {
       const uid = localStorage.getItem('user')
       const userNameRef = ref(this.$db, 'users/' + uid + '/nickname')
@@ -89,8 +84,6 @@ export default {
 
         this.savedDayArray = array
         this.savedDayMoodMap = map
-
-        console.log(new Date().toISOString())
       })
     },
     getColor (date) {
