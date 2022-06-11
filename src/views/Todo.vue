@@ -39,7 +39,8 @@ export default {
       } else {
         let item = {
           text: todoItem,
-          checked: false
+          checked: false,
+          date: new Date()
         }
         this.todoItems.push(item)
         console.log(this.todoItems.length)
