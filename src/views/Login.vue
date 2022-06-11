@@ -44,31 +44,37 @@ export default {
   },
   methods: {
     login () {
-      signInWithEmailAndPassword(this.$auth, this.email, this.password)
-        .then((userCredential) => {
-          const uid = userCredential.user.uid
-          // save uid in localStorage
-          localStorage.setItem('user', uid)
-          router.replace('/diary')
-        })
-        .catch((err) => {
-          const errorCode = err.code
-          switch (errorCode) {
-            case 'auth/invalid-email':
-              alert('Invalid type of Email!')
-              break
-            case 'auth/user-not-found':
-              alert('Cannot find user email')
-              break
-            case 'auth/wrong-password':
-              alert('Wrong password')
-              break
-            default:
-              console.log('signin error: ', errorCode)
-              break
-          }
-        })
-      console.log(this.email, this.password)
+      var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const result = regex.test(this.email)
+      if (!result) {
+        alert('Invalid type of Email!')
+      } else {
+        signInWithEmailAndPassword(this.$auth, this.email, this.password)
+          .then((userCredential) => {
+            const uid = userCredential.user.uid
+            // save uid in localStorage
+            localStorage.setItem('user', uid)
+            router.replace('/diary')
+          })
+          .catch((err) => {
+            const errorCode = err.code
+            switch (errorCode) {
+              case 'auth/invalid-email':
+                alert('Invalid type of Email!')
+                break
+              case 'auth/user-not-found':
+                alert('Cannot find user email')
+                break
+              case 'auth/wrong-password':
+                alert('Wrong password')
+                break
+              default:
+                console.log('signin error: ', errorCode)
+                break
+            }
+          })
+        console.log(this.email, this.password)
+      }
     }
   }
 }
