@@ -1,8 +1,8 @@
 <template>
   <section>
-    <transition-group name="list" tag="ul">
-      <li v-for="(todoItem, index) in propsdata" :key="index" class="shadow">
         {{ todoItem }}
+    <transition-group name="list" tag="ul" id="todoUl">
+      <li v-for="(todoItem, index) in propsdata" :key="todoItem" id="todoLi">
         <span class="removeBtn" type="button" @click="removeTodo(todoItem, index)">
             <i class="far fa-trash-alt" aria-hidden="true"></i>
         </span>
@@ -30,7 +30,7 @@ export default {
   opacity: 0;
   transform: translateY(30px);
 }
-ul{
+#todoUl {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -39,7 +39,7 @@ ul{
   margin-top: 10px;
   text-align: left;
 }
-li{
+#todoLi {
   display: flex;
   min-height: 50px;
   height: 50px;
