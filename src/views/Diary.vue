@@ -97,6 +97,7 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
+  height: 100%;
   /* align-items: center;
   justify-content: center; */
 }
@@ -111,13 +112,14 @@ h2 {
   margin-top: 1em;
 }
 .top3 {
-  margin-top: 3em;
+  margin-top: 1em;
 }
 .left2 {
-  margin-left: 3em;
+  margin-left: 1em;
 }
 .canvas {
-  width: 25em;
+  width: 90%;
+  height: 60%;
 }
 .saveButton {
   float: right;
