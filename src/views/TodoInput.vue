@@ -1,6 +1,6 @@
 <template>
   <div class="inputContainer">
-    <input id="inputBox" type="text" v-model="InputTodoItem" placeholder="Type what you have to do!"
+    <input id="inputBox" type="text" v-model="InputTodoItem" placeholder="Type what you have to do and Enter!"
            v-on:keyup.enter="addTodo">
   </div>
 </template>
@@ -39,5 +39,6 @@ export default {
   font-size: 0.9rem;
   width: 80%;
   text-align: center;
+  border: solid 1px black;
 }
 </style>
