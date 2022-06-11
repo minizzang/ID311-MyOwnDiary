@@ -53,7 +53,8 @@ export default {
   },
   watch: {
     $route (to, from) {
-      if (from.name === 'Login') { // Login -> show user profile
+      console.log(to.name, from.name)
+      if (from.name === 'Login' && to.name !== 'Signup') { // Login -> show user profile
         this.userSigned = true
       } else if (to.name === 'Login') { // Logout
         this.userSigned = false
