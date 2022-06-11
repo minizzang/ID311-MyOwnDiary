@@ -2,7 +2,7 @@
   <div>
     <h1>Todo List</h1>
     <TodoInput v-on:addTodo="addTodo"/>
-    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"/>
+    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo" @checkTodo="checkTodo"/>
     <TodoFooter v-on:removeAll="clearAll"/>
   </div>
 </template>
@@ -45,9 +45,15 @@ export default {
         console.log(this.todoItems.length)
       }
     },
-    sortTodo () {
-      console.log('sort called')
-      this.todoItems.sort((a, b) => a.checked ? 1 : -1)
+    checkTodo (index) {
+      let item = this.todoItems[index]
+      item.checked = !item.checked
+      this.todoItems.splice(index, 1)
+      if (item.checked) {
+        this.todoItems.push(item)
+      } else {
+        this.todoItems.unshift(item)
+      }
     },
     removeTodo (todoItem, index) {
       // firebase 연동 부분
