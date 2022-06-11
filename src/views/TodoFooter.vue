@@ -1,8 +1,8 @@
 <template>
-  <span @click="clearTodo">
+  <span @click="clearTodo" id="clearAllSpan">
     <div class="clearAllContainer">
-    <p class="clearAllBtn">Clear All</p>
-  </div>
+      <p class="clearAllBtn">Clear All</p>
+    </div>
   </span>
 </template>
 
@@ -24,6 +24,9 @@ export default{
   background-color: #6f42c1;
   border-radius: 5px;
   margin: 0 auto;
+}
+#clearAllSpan{
+  display: inline-block;
 }
 .clearAllBtn{
   color: white;
