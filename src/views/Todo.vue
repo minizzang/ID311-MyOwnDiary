@@ -12,6 +12,12 @@ import TodoInput from './TodoInput'
 import TodoList from './TodoList'
 import TodoFooter from './TodoFooter'
 export default {
+  watch: {
+    todoItems () {
+      console.log(this.todoItems)
+      // this.todoItems.sort((a, b) => (a.checked) ? 1 : -1)
+    }
+  },
   data () {
     return {
       todoItems: []
@@ -31,9 +37,17 @@ export default {
       if (this.todoItems.length >= 10) {
         alert('Too Many Todo Items! (Max: 10)')
       } else {
-        this.todoItems.push(todoItem)
+        let item = {
+          text: todoItem,
+          checked: false
+        }
+        this.todoItems.push(item)
         console.log(this.todoItems.length)
       }
+    },
+    sortTodo () {
+      console.log('sort called')
+      this.todoItems.sort((a, b) => a.checked ? 1 : -1)
     },
     removeTodo (todoItem, index) {
       // firebase 연동 부분
