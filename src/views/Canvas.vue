@@ -53,6 +53,14 @@ export default {
     Chrome,
     FontAwesomeIcon
   },
+  props: {
+    width: {
+      type: Number
+    },
+    height: {
+      type: Number
+    }
+  },
   data () {
     return {
       isDrawing: true,
@@ -63,6 +71,24 @@ export default {
       },
       displayPicker: false
     }
+  },
+  mounted () {
+    this.canvas = new fabric.Canvas('sketch', {
+      isDrawingMode: true
+    })
+    this.canvas.freeDrawingBrush = new fabric.PencilBrush(this.canvas)
+
+    // default setting
+    const brush = this.canvas.freeDrawingBrush
+    brush.color = this.colorPick.hex8
+    brush.width = this.strokeSize
+
+    // console.log(this.props.width)
+
+    this.canvas.setDimensions({width: '100%', height: '100%'}, {cssOnly: true})
+  },
+  watch: {
+    'colorPick': 'setColor'
   },
   methods: {
     setColor () {
@@ -169,21 +195,8 @@ export default {
         console.log('image uploaded to firebase storage!')
       })
     }
-  },
-  mounted () {
-    this.canvas = new fabric.Canvas('sketch', {
-      isDrawingMode: true
-    })
-    this.canvas.freeDrawingBrush = new fabric.PencilBrush(this.canvas)
-
-    // default setting
-    const brush = this.canvas.freeDrawingBrush
-    brush.color = this.colorPick.hex8
-    brush.width = this.strokeSize
-  },
-  watch: {
-    'colorPick': 'setColor'
   }
+
 }
 </script>
 
@@ -200,6 +213,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 80%;
+  height: 100%;
 }
 
 #sketch {
@@ -212,9 +227,10 @@ export default {
 .col-box {
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-left: 10px;
   justify-content: center;
   align-items: center;
+  width: 15%;
 }
 
 .row-box {

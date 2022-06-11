@@ -17,6 +17,7 @@
           @click:date="passDate"
           :events="savedDayArray"
           :event-color="getColor"
+          :max-date="maxDate"
         ></v-date-picker>
       </div>
     </b-row>
@@ -29,10 +30,10 @@ import { onValue, ref } from '@firebase/database'
 export default {
   data () {
     return {
-      value: null,
+      maxDate: '2022-06-04', // todo: prevent future dates
       userName: '',
       userIntro: '',
-      pickerDate: new Date().toISOString().substr(0, 10),
+      pickerDate: new Date().toISOString().substring(0, 10),
       savedDayArray: null,
       savedDayMoodMap: null
     }
@@ -40,15 +41,13 @@ export default {
   mounted () {
     this.getUserInfo()
     this.getSavedDay()
+
+    // convert to Korea time zone
+    const dt = new Date()
+    this.pickerDate = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
+    this.maxDate = this.pickerDate
   },
   methods: {
-    setToday () {
-      const now = new Date()
-      this.value = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    },
-    clearDate () {
-      this.value = ''
-    },
     getUserInfo () {
       const uid = localStorage.getItem('user')
       const userNameRef = ref(this.$db, 'users/' + uid + '/nickname')
@@ -64,27 +63,36 @@ export default {
       this.$emit('pass', this.pickerDate)
     },
     getSavedDay () {
-      console.log('mounted')
-      const array = []
-      array.push('2022-06-02')
-      array.push('2022-06-16')
-      this.savedDayArray = array
+      // load user's diary log (day of worte diary)
+      const uid = localStorage.getItem('user')
+      const userDiaryRef = ref(this.$db, 'diary/' + uid)
+      let userDiaryData
+      onValue(userDiaryRef, (snapshot) => {
+        userDiaryData = snapshot.val()
 
-      const map = new Map()
-      map.set(array[0], 1)
-      map.set(array[1], 2)
+        // array and map for checking diary wrote day
+        const array = []
+        const map = new Map()
 
-      this.savedDayMoodMap = map
+        if (userDiaryData != null) {
+          Object.keys(userDiaryData).forEach((key) => {
+            const date = key.substring(0, 4) + '-' + key.substring(4, 6) + '-' + key.substring(6, 8)
+            array.push(date)
+            map.set(date, userDiaryData[key].mood)
+          })
+        }
 
-      // event-color="date => this.savedDayMoodMap.get(date) === 1 ? 'rgb(255, 0, 0)' : 'rgb(0, 255, 0)'"
+        this.savedDayArray = array
+        this.savedDayMoodMap = map
+      })
     },
     getColor (date) {
       switch (this.savedDayMoodMap.get(date)) {
-        case 1:
+        case 'Very Good':
           return 'rgb(255, 0, 0)'
-        case 2:
+        case '2':
           return 'rgb(0, 255, 0)'
-        case 3:
+        case 'Just OK':
           return 'rgb(0, 0, 255)'
         case 4:
           return 'rgb(0, 0, 0)'

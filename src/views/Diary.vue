@@ -1,125 +1,77 @@
 <template>
   <div class="container">
-    <b-container fluid>
-      <!-- <b-row>
-        <b-col>
-          <h1 style="text-decoration: underline; text-underline-position:under;" class="top">✍️ How was your day?</h1>
-        </b-col>
-
-      </b-row>
-      <br/> -->
-      <b-row class="top3">
-        <div>{{props}}</div>
-        <b-col cols="1" class="left2">
-          <h4>Title: </h4>
-        </b-col>
-        <b-col cols="5">
-          <b-form-input v-model="title" placeholder="Enter the Title"></b-form-input>
-        </b-col>
-        <b-col>
-          <b-form-group v-slot="{ ariaDescribedby }">
-            <b-form-radio-group
-              id="btn-radios-1"
-              v-model="moodSelected"
-              :options="moodOptions"
-              :aria-describedby="ariaDescribedby"
-              button-variant="outline-primary"
-              name="plain-inline"
-              buttons
-            ></b-form-radio-group>
-          </b-form-group>
-        </b-col>
-      </b-row>
-    </b-container>
-    <br/>
-    <Canvas class="canvas" ref="canvas" @imageRef="saveDiary"></Canvas>
-    <br/>
-    <div class="textarea">
-      <b-form-textarea
-        id="textarea"
-        v-model="comment"
-        placeholder="Please describe your day..."
-        size="lg"
-        rows="6"
-        max-rows="6"
-      ></b-form-textarea>
-      <br/>
-      <div style="float: right;">
-        <button class="top" @click="callCanvas">Save</button>
+    <div>{{props}}</div>
+    <DiaryEditor v-if="this.isEditMode" v-bind:date="props"></DiaryEditor>
+    <div v-else>
+      <div v-if="this.hasDiary">has Diary</div>
+      <div v-else>
+        No diary & not today -> 다이어리 쓸래요?
+        <button
+          @click="setIsEditMode"
+        >다이어리 쓰기</button>
       </div>
     </div>
-    <br/>
   </div>
 </template>
 
 <script>
-import { ref, set } from '@firebase/database'
-import Canvas from './Canvas'
+import { onValue, ref } from '@firebase/database'
+import DiaryEditor from './DiaryEditor.vue'
 
 export default {
   components: {
-    Canvas
+    DiaryEditor
+  },
+  props: ['props'],
+  watch: {
+    props () {
+      // whenever props(checked date) changes, check diary
+      this.checkHasDiary()
+    }
   },
   data () {
     return {
+      isEditMode: true,
+      hasDiary: false,
       title: '',
       moodSelected: 'Very Good',
-      moodOptions: [
-        { text: ' Best ', value: 'Very Good' },
-        { text: ' Nice', value: 'second' },
-        { text: ' OK', value: 'Just OK' },
-        { text: ' Bad', value: 'Bad' }
-      ],
       comment: ''
     }
   },
-  props: ['props'],
+  mounted () {
+    // first check diary
+    this.checkHasDiary()
+  },
   methods: {
-    callCanvas () {
-      const date = this.props.replace(/-/g, '') // 2022-06-11 -> 20220611
-      this.$refs.canvas.downloadImage(date)
-    },
-    saveDiary (imageRef) {
+    checkHasDiary () {
       const uid = localStorage.getItem('user')
-      const date = this.props.replace(/-/g, '')
-      set(ref(this.$db, 'diary/' + uid + '/' + date), {
-        title: this.title,
-        mood: this.moodSelected, // todo: mood 숫자로 저장하기
-        image: imageRef,
-        comment: this.comment
+      const userDiaryRef = ref(this.$db, 'diary/' + uid)
+
+      onValue(userDiaryRef, (snapshot) => {
+        const date = this.props.replace(/-/g, '')
+
+        let found = false
+        for (const elem in snapshot.val()) {
+          if (elem === date) {
+            found = true
+            break
+          }
+        }
+        found ? this.hasDiary = true : this.hasDiary = false
+
+        const dt = new Date()
+        const today = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
+
+        today === this.props ? this.isEditMode = true : this.isEditMode = false
       })
+    },
+    setIsEditMode () {
+      this.isEditMode = !this.isEditMode
     }
   }
 }
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
-}
-.textarea {
-  margin-left: 5em;
-  margin-right: 5em;
-}
-h2 {
-  text-align: left;
-}
-.top {
-  margin-top: 1em;
-}
-.top3 {
-  margin-top: 3em;
-}
-.left2 {
-  margin-left: 3em;
-}
-.canvas {
-  width: 25em;
-}
-.saveButton {
-  float: right;
-}
+
 </style>
