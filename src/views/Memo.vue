@@ -1,7 +1,9 @@
 <template>
   <div id="memoApp">
-      <h2 class="top"> Memo everything!</h2>
-      <MemoList :memos="memos" :memoContents="memoContents" @removeMemo="removeMemo"/>
+      <h2 class="top"> Memo Board</h2>
+      <div id="memoBoard">
+        <MemoList :memos="memos" :memoContents="memoContents" @removeMemo="removeMemo"/>
+      </div>
       <MemoInput @addMemo="addMemo" />
   </div>
 </template>
@@ -50,6 +52,11 @@ export default {
 </script>
 
 <style scoped>
+#memoBoard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 #memoContainer {
   border: 1px solid black;
 }
@@ -58,5 +65,8 @@ export default {
   border-radius: 1vh;
   padding-left: 1.2vh;
   padding-right: 1.2vh;
+}
+.top {
+  padding-top: 3vh;
 }
 </style>

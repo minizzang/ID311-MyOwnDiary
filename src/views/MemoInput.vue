@@ -29,7 +29,7 @@ export default {
     height: 50px;
     border-radius: 100%;
     margin-right: 5vh;
-    background-color: plum;
+    background-color: #C3B1E1;
     color: white;
     font-size: 30px;
 }

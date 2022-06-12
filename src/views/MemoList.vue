@@ -5,7 +5,7 @@
       {{memoMessage}}
       <!-- {{number}}th memo -->
       <div>
-          <button type="button" class="memoButton" @click="removeMemo(memos, [], number)">x</button>
+          <button type="button" class="memoButton" @click="removeMemo(memos, [], number)"><strong>x</strong></button>
           <!-- <button type="button" class="memoButton" @click="saveMemo(memos, number)">✓</button> -->
       </div>
     </div>
@@ -35,18 +35,24 @@ export default {
 #memoList {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-content: flex-start;
   flex-wrap: wrap;
   overflow: scroll;
+  width: 90%;
   height: 60vh;
-  padding: 2em;
-  margin: 1em;
+  padding-right: 2em;
+  padding-left: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  background-color: #C3B1E1;
 }
 .memoEach {
     display: flex;
     align-content: flex-start;
-    padding: 1em;
+    padding: 0.5em;
 }
 .memoText {
  width: 20vh;
@@ -55,13 +61,13 @@ export default {
  border-radius: 10px;
  margin-right: 0.5em;
  overflow: scroll;
+ background-color: whitesmoke;
 }
 .memoButton {
     height: 20px;
     width: 20px;
     margin-bottom: 1vh;
     border-radius: 100%;
-    background-color: lightsalmon;
     color: white;
     text-align: center;
     line-height: 1em;
