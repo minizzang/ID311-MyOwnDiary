@@ -31,8 +31,8 @@
         </label>
       </div>
       <input id="addImage" ref="fileInput" type="file" accept="image/*" @input="selectImgFile">
-      <button id="clear" v-on:click="clearCanvas">clear all</button>
-      <button v-on:click="downloadImage">download</button>
+      <button id="clear" v-on:click="clearCanvas">clear</button>
+      <button id="download" v-on:click="downloadImage">download</button>
     </div>
   </div>
 </template>
@@ -307,9 +307,18 @@ export default {
   position: absolute;
 }
 
-#clear {
+#clear, #download {
   border-radius: 5px;
-  background-color: white;
   border: 2px solid grey;
+  margin-bottom: 0.5em;
+  padding: 0.1em;
+}
+
+#clear {
+  background-color: coral;
+}
+
+#download {
+  background-color: lightblue;
 }
 </style>
