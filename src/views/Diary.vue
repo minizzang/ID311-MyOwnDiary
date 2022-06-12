@@ -20,10 +20,14 @@
         </div>
       </div>
       <div v-else>
-        No diary & not today -> 다이어리 쓸래요?
+        <br/>
+        *** There's no diary yet. You can write it if it's the past one. ***
+        <br/>
+        <br/>
         <button
           @click="setIsEditMode"
-        >다이어리 쓰기</button>
+          class="writeButton shadow"
+        > Click to Write </button>
       </div>
     </div>
   </div>
@@ -95,13 +99,22 @@ export default {
       })
     },
     setIsEditMode () {
-      this.isEditMode = !this.isEditMode
+      const dt = new Date()
+      const today = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
+      if (today > this.props) { this.isEditMode = !this.isEditMode }
+      if (today < this.props) { alert('You can not write the future diary!') }
     }
   }
 }
 </script>
 
 <style scoped>
+.writeButton {
+  border-radius: 5px;
+  border: 2px solid grey;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+}
 .diary-content{
   width: 100%;
   height: 100%;
