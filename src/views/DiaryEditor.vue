@@ -16,7 +16,7 @@
           <b-form-input v-model="title" placeholder="Enter the Title"></b-form-input>
         </b-col>
         <b-col>
-          <b-form-group v-slot="{ ariaDescribedby }">
+          <!-- <b-form-group v-slot="{ ariaDescribedby }">
             <b-form-radio-group
               id="btn-radios-1"
               v-model="moodSelected"
@@ -26,7 +26,40 @@
               name="plain-inline"
               buttons
             ></b-form-radio-group>
-          </b-form-group>
+          </b-form-group> -->
+          <div class="moodRadio">
+            <figure>
+              <input type="radio" id="happy" name="mood" class="hidden" v-bind:value="Happy" v-model="moodSelected"/>
+              <label for="happy" class="mood">
+                <img class="moodImg" src="../assets/mood/happy.png" width="30px" alt="" />
+              </label>
+            </figure>
+            <figure>
+              <input type="radio" id="soso" name="mood" class="hidden" v-bind:value="Soso" v-model="moodSelected"/>
+              <label for="soso" class="mood">
+                <img class="moodImg" src="../assets/mood/soso.png" width="30px" alt="" />
+              </label>
+            </figure>
+            <figure>
+              <input type="radio" id="sad" name="mood" class="hidden" v-bind:value="Sad" v-model="moodSelected"/>
+              <label for="sad" class="mood">
+                <img class="moodImg" src="../assets/mood/sad.png" width="30px" alt="" />
+              </label>
+            </figure>
+            <figure>
+              <input type="radio" id="angry" name="mood" class="hidden" v-bind:value="Angry" v-model="moodSelected"/>
+              <label for="angry" class="mood">
+                <img class="moodImg" src="../assets/mood/angry.png" width="30px" alt="" />
+              </label>
+            </figure>
+            <figure>
+              <input type="radio" id="tired" name="mood" class="hidden" v-bind:value="Tired" v-model="moodSelected"/>
+              <label for="tired" class="mood">
+                <img class="moodImg" src="../assets/mood/tired.png" width="30px" alt="" />
+              </label>
+            </figure>
+            <div class="moodSelected">{{moodSelected}}</div>
+          </div>
         </b-col>
       </b-row>
     </b-container>
@@ -67,14 +100,13 @@ export default {
   data () {
     return {
       title: '',
-      moodSelected: 'Very Good',
-      moodOptions: [
-        { text: ' Best ', value: 'Very Good' },
-        { text: ' Nice', value: 'Nice' },
-        { text: ' OK', value: 'Just OK' },
-        { text: ' Bad', value: 'Bad' }
-      ],
-      comment: ''
+      moodSelected: '',
+      comment: '',
+      Happy: 'What a happy day!',
+      Soso: 'So-so.',
+      Sad: 'Want to cry TT',
+      Angry: 'Really upset!',
+      Tired: 'Eww.. Tired..'
     }
   },
   mounted () {
@@ -99,6 +131,27 @@ export default {
 </script>
 
 <style scoped>
+.moodRadio input[type="radio"]:checked + label .moodImg {
+  width: 40px;
+}
+.moodImg:hover {
+  width: 35px;
+}
+.hidden {
+  position: absolute;
+  left: -9999px;
+}
+.mood {
+  margin-right: 1vh;
+  width: 35px;
+}
+.moodRadio {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+  height: 40px;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -141,6 +194,9 @@ h2 {
   background-color: #C3B1E1;
   color: white;
   font-size: 3vh;
-    
+}
+.moodSelected {
+  margin-left: 1vh;
+  color: #C3B1E1;
 }
 </style>

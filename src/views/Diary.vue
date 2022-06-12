@@ -6,7 +6,7 @@
       <div v-if="this.hasDiary" class="diary-content">
         <div class="row-box">
           <h4>Title {{title}}</h4>
-          <div>Mood {{mood}}</div>
+          <div>{{mood}}</div>
         </div>
         <img
           :src="sketch"
