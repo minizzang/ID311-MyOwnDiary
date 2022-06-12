@@ -102,7 +102,6 @@ export default {
     }
   }
 }
-      
 </script>
 
 <style scoped>
@@ -119,6 +118,7 @@ export default {
   margin-top: 1em;
 }
 .test {
-  background-color: blueviolet;
+  position: absolute;
+  bottom: 0;
 }
 </style>
