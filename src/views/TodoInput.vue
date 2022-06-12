@@ -1,7 +1,8 @@
 <template>
   <div class="inputContainer">
-    <input id="inputBox" type="text" v-model="InputTodoItem" placeholder="Type what you have to do and Enter!"
+    <input id="inputBox" type="text" v-model="InputTodoItem" placeholder="Pick the date and type!"
            v-on:keyup.enter="addTodo">
+    <button class="addButton" @click="addTodo">+</button>
   </div>
 </template>
 
@@ -37,8 +38,17 @@ export default {
 }
 #inputBox {
   font-size: 0.9rem;
-  width: 80%;
+  width: 70%;
   text-align: center;
   border: solid 1px black;
+}
+.addButton {
+  width: 5%;
+  /* line-height: 50px; */
+  background-color: #6f42c1;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  /* margin: 0 auto; */
 }
 </style>

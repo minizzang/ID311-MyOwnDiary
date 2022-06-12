@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Todo List</h1>
+    <h2 class="top">Todo List</h2>
     <TodoInput v-on:addTodo="addTodo"/>
+    <br/>
     <TodoList v-bind:propsdata="todoItemsWithDate" @removeTodo="removeTodo" @checkTodo="checkTodo"/>
     <TodoFooter v-on:removeAll="clearAll"/>
   </div>
@@ -81,3 +82,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.top {
+  padding-top: 3vh;
+}
+</style>

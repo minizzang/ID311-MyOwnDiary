@@ -1,6 +1,6 @@
 <template>
   <div id="memoApp">
-      <h2 class="top"> Memo Board</h2>
+      <h2 class="top">Memo Board</h2>
       <div id="memoBoard">
         <MemoList :memos="memos" :memoContents="memoContents" @removeMemo="removeMemo"/>
       </div>
