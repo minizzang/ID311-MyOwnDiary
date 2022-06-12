@@ -1,7 +1,7 @@
 <template>
   <div id="memoApp">
       <h2 class="top"> Memo everything!</h2>
-      <MemoList :memos="memos" :tags="tags" @removeMemo="removeMemo"/>
+      <MemoList :memos="memos" :memoContents="memoContents" @removeMemo="removeMemo"/>
       <MemoInput @addMemo="addMemo" />
   </div>
 </template>
@@ -17,19 +17,33 @@ export default {
     MemoInput
   },
   data () {
+    // all the memo data is in the `memoContents`, not `memos`
     return {
       memos: [],
       tags: [],
+      memoContents: [],
       numMemos: 0
     }
   },
   methods: {
     addMemo () {
-      this.memos.push(this.numMemos)
+      this.memos.push({id: this.numMemos, value: ''})
+      this.memoContents.push({id: this.numMemos, value: ''})
+      // console.log(this.memos)
+      // console.log(this.memoContents)
       this.numMemos++
     },
-    removeMemo (memos, number) {
+    removeMemo (memos, memoContents, number) {
+      this.memoContents = memoContents
+      // console.log(memoContents)
+      for (let i = memos.length; i >= 0; i--) {
+        if (this.memos[i] === number) {
+          this.memoContents.splice(i, 1)
+        }
+      }
       this.memos = this.memos.filter(el => el !== number)
+      console.log(this.memos)
+      console.log(this.memoContents)
     }
   }
 }

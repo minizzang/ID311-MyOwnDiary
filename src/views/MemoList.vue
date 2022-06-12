@@ -1,12 +1,13 @@
 <template>
   <div id="memoList">
     <div class="memoEach" v-for="(number) in memos" :key="number.id">
-    <textarea class="shadow memoText"></textarea>
-    <!-- {{number}}th memo -->
-    <div>
-        <button type="button" class="memoButton" @click="removeMemo(memos, number)">x</button>
-        <!-- <button type="button" class="memoButton" @click="saveMemo(memos, number)">✓</button> -->
-    </div>
+      <textarea class="shadow memoText" v-model="number.value"></textarea>
+      {{memoMessage}}
+      <!-- {{number}}th memo -->
+      <div>
+          <button type="button" class="memoButton" @click="removeMemo(memos, [], number)">x</button>
+          <!-- <button type="button" class="memoButton" @click="saveMemo(memos, number)">✓</button> -->
+      </div>
     </div>
   </div>
 </template>
@@ -15,11 +16,16 @@
 export default {
   props: {
     memos: [],
-    tags: []
+    memoContents: [],
+    memoMessage: []
   },
   methods: {
-    removeMemo (memos, index) {
-      this.$emit('removeMemo', memos, index)
+    removeMemo (memos, memoContents, index) {
+      for (let i = 0; i < this.memos.length; i++) {
+        this.memoContents[i] = this.memos[i]
+      }
+      console.log(this.memoContents)
+      this.$emit('removeMemo', memos, memoContents, index)
     }
   }
 }
