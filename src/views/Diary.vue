@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div>{{props}}</div>
+  <div>
+    <h2 class="top">{{props}}</h2>
     <DiaryEditor v-if="this.isEditMode" v-bind:date="props"></DiaryEditor>
     <div v-else>
       <div v-if="this.hasDiary" class="diary-content">
@@ -137,5 +137,8 @@ export default {
   height: 30%;
   background-color: aqua;
   margin: 5px;
+}
+.top {
+  padding-top: 3vh;
 }
 </style>

@@ -44,7 +44,7 @@
       ></b-form-textarea>
       <br/>
       <div style="float: right;">
-        <button class="top" @click="callCanvas">Save</button>
+        <button class="top saveButton shadow" @click="callCanvas">Save</button>
       </div>
     </div>
     <br/>
@@ -102,13 +102,17 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 90%;
+  padding-top: 0;
   /* align-items: center;
   justify-content: center; */
 }
 .textarea {
-  margin-left: 5em;
-  margin-right: 5em;
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-end;
+  margin-left: 3em;
+  margin-right: 20%;
 }
 h2 {
   text-align: left;
@@ -127,6 +131,16 @@ h2 {
   height: 60%;
 }
 .saveButton {
-  float: right;
+  position: absolute;
+  right: 13%;
+  bottom: 5%;
+  width: 10vh;
+  height: 10vh;
+  border-radius: 100%;
+  margin-left: 5vh;
+  background-color: #C3B1E1;
+  color: white;
+  font-size: 3vh;
+    
 }
 </style>

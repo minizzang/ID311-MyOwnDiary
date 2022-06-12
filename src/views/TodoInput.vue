@@ -44,11 +44,9 @@ export default {
 }
 .addButton {
   width: 5%;
-  /* line-height: 50px; */
   background-color: #6f42c1;
   color: white;
   font-size: 18px;
   border-radius: 5px;
-  /* margin: 0 auto; */
 }
 </style>

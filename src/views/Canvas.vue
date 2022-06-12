@@ -308,16 +308,9 @@ export default {
 
 #clear, #download {
   border-radius: 5px;
-  border: 2px solid grey;
   margin-bottom: 0.5em;
-  padding: 0.1em;
-}
-
-#clear {
-  background-color: coral;
-}
-
-#download {
-  background-color: lightblue;
+  padding: 0.2em;
+  background-color: black;
+  color: white
 }
 </style>
