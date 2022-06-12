@@ -88,18 +88,21 @@ export default {
     },
     getColor (date) {
       switch (this.savedDayMoodMap.get(date)) {
-        case 'Very Good':
-          return 'rgb(255, 0, 0)'
-        case 'Nice':
-          return 'rgb(0, 255, 0)'
-        case 'Just OK':
-          return 'rgb(0, 0, 255)'
-        case 'Bad':
-          return 'rgb(0, 0, 0)'
+        case 'What a happy day!':
+          return 'rgb(237, 85, 100)'
+        case 'So-so.':
+          return 'rgb(255, 206, 84)'
+        case 'Want to cry TT':
+          return 'rgb(79,193,232)'
+        case 'Really upset!':
+          return 'rgb(172,146,235)'
+        case 'Eww.. Tired..':
+          return 'rgb(79,193,40)'
       }
     }
   }
 }
+      
 </script>
 
 <style scoped>
