@@ -15,7 +15,8 @@ export default {
   props: ['props'],
   data () {
     return {
-      todoItemsWithDate: []
+      todoItemsWithDate: [],
+      temp: 1
     }
   },
   components: {
@@ -29,27 +30,29 @@ export default {
       this.todoItemsWithDate = []
     },
     addTodo (todoItem) {
-      if (this.todoItemsWithDate.length >= 10) {
-        alert('Too Many Todo Items! (Max: 10)')
-      } else {
-        let item = {
-          text: todoItem,
-          checked: false
-        }
-        for (let i = 0; i < this.todoItemsWithDate.length; i++) {
-          if (this.props === this.todoItemsWithDate[i].date) {
-            this.todoItemsWithDate[i].todoItems.push(item)
-            return
-          }
-        }
-        let dateItem = {
-          date: this.props,
-          todoItems: [item]
-        }
-        this.todoItemsWithDate.push(dateItem)
-        this.sortTodo()
-        console.log(this.todoItemsWithDate.length)
+      let item = {
+        text: todoItem,
+        checked: false
       }
+      for (let i = 0; i < this.todoItemsWithDate.length; i++) {
+        if (this.props === this.todoItemsWithDate[i].date) {
+          for (let j = 0; j < this.todoItemsWithDate[i].todoItems.length; j++) {
+            if (this.todoItemsWithDate[i].todoItems[j].text === todoItem) {
+              alert('Already exist Todo!')
+              return
+            }
+          }
+          this.todoItemsWithDate[i].todoItems.push(item)
+          return
+        }
+      }
+      let dateItem = {
+        date: this.props,
+        todoItems: [item]
+      }
+      this.todoItemsWithDate.push(dateItem)
+      this.sortTodo()
+      console.log(this.todoItemsWithDate.length)
     },
     checkTodo (index, index2) {
       let item = this.todoItemsWithDate[index].todoItems[index2]
