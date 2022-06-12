@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 class="top">Todo List</h2>
+    <br/>
     <TodoInput v-on:addTodo="addTodo"/>
     <br/>
     <TodoList v-bind:propsdata="todoItemsWithDate" @removeTodo="removeTodo" @checkTodo="checkTodo"/>

@@ -2,20 +2,21 @@
   <div>
     <h2 class="top">{{props}}</h2>
     <DiaryEditor v-if="this.isEditMode" v-bind:date="props"></DiaryEditor>
-    <div v-else>
+    <div v-else class="diaryBox">
       <div v-if="this.hasDiary" class="diary-content">
         <div class="row-box">
-          <h4>Title {{title}}</h4>
-          <div>{{mood}}</div>
+          <h3><{{title}}></h3>
+          <h3 class="moodText">{{mood}}</h3>
         </div>
         <img
           :src="sketch"
           class="sketch"
         />
-        <div class="comment">{{comment}}</div>
+        <div class="comment"> {{comment}}</div>
         <div v-if="this.isToday">
           <button
             @click="setIsEditMode"
+            class="writeButton shadow rightBottom"
           >다시 쓰기</button>
         </div>
       </div>
@@ -109,6 +110,19 @@ export default {
 </script>
 
 <style scoped>
+.rightBottom {
+  position: absolute;
+  bottom: 2vh;
+  right: 15vh;
+}
+.moodText {
+  color: #C3B1E1;
+}
+.diaryBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .writeButton {
   border-radius: 5px;
   border: 2px solid grey;
@@ -116,7 +130,9 @@ export default {
   padding: 0.5em;
 }
 .diary-content{
-  width: 100%;
+  justify-content: center;
+  align-content: center;
+  width: 90%;
   height: 100%;
   padding: 1em;
 }
@@ -127,16 +143,26 @@ export default {
   justify-content: space-between;
 }
 .sketch{
-  width: 45vw;
-  height: 45vh;
+  width: 42vw;
+  height: 40vh;
   object-fit: contain;
   margin: 5px;
   box-shadow: 2px 2px 7px 0px rgba(201, 201, 201, 1);
 }
 .comment {
-  height: 30%;
-  background-color: aqua;
-  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  padding: 1vh;
+  height: 50%;
+  width: 100%;
+  box-shadow: 2px 2px 7px 0px rgba(201, 201, 201, 1);
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  text-align: left;
+  justify-content: space-between;
+  align-content: center;
 }
 .top {
   padding-top: 3vh;
