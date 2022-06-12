@@ -40,19 +40,21 @@ export default {
     return {
       userSigned: false,
       path: '/diary',
-      date: new Date().toISOString().substr(0, 10)
+      date: new Date().toISOString().substring(0, 10)
     }
   },
   mounted () {
     const uid = localStorage.getItem('user')
     uid !== null ? this.userSigned = true : this.userSigned = false
-    // if (router.currentRoute.path !== '/diary') {
-    //   return router.replace('/diary')
-    // }
+
+    // convert to Korea time zone
+    const dt = new Date()
+    this.date = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
   },
   watch: {
     $route (to, from) {
-      if (from.name === 'Login') { // Login -> show user profile
+      console.log(to.name, from.name)
+      if (from.name === 'Login' && to.name !== 'Signup') { // Login -> show user profile
         this.userSigned = true
       } else if (to.name === 'Login') { // Logout
         this.userSigned = false

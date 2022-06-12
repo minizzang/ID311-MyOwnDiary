@@ -1,125 +1,128 @@
 <template>
   <div class="container">
-    <b-container fluid>
-      <!-- <b-row>
-        <b-col>
-          <h1 style="text-decoration: underline; text-underline-position:under;" class="top">✍️ How was your day?</h1>
-        </b-col>
-
-      </b-row>
-      <br/> -->
-      <b-row class="top3">
-        <div>{{props}}</div>
-        <b-col cols="1" class="left2">
-          <h4>Title: </h4>
-        </b-col>
-        <b-col cols="5">
-          <b-form-input v-model="title" placeholder="Enter the Title"></b-form-input>
-        </b-col>
-        <b-col>
-          <b-form-group v-slot="{ ariaDescribedby }">
-            <b-form-radio-group
-              id="btn-radios-1"
-              v-model="moodSelected"
-              :options="moodOptions"
-              :aria-describedby="ariaDescribedby"
-              button-variant="outline-primary"
-              name="plain-inline"
-              buttons
-            ></b-form-radio-group>
-          </b-form-group>
-        </b-col>
-      </b-row>
-    </b-container>
-    <br/>
-    <Canvas class="canvas" ref="canvas" @imageRef="saveDiary"></Canvas>
-    <br/>
-    <div class="textarea">
-      <b-form-textarea
-        id="textarea"
-        v-model="comment"
-        placeholder="Please describe your day..."
-        size="lg"
-        rows="6"
-        max-rows="6"
-      ></b-form-textarea>
-      <br/>
-      <div style="float: right;">
-        <button class="top" @click="callCanvas">Save</button>
+    <div>{{props}}</div>
+    <DiaryEditor v-if="this.isEditMode" v-bind:date="props"></DiaryEditor>
+    <div v-else>
+      <div v-if="this.hasDiary" class="diary-content">
+        <div class="row-box">
+          <h4>Title {{title}}</h4>
+          <div>Mood {{mood}}</div>
+        </div>
+        <img
+          :src="sketch"
+          class="sketch"
+        />
+        <div class="comment">{{comment}}</div>
+        <div v-if="this.isToday">
+          <button
+            @click="setIsEditMode"
+          >다시 쓰기</button>
+        </div>
+      </div>
+      <div v-else>
+        No diary & not today -> 다이어리 쓸래요?
+        <button
+          @click="setIsEditMode"
+        >다이어리 쓰기</button>
       </div>
     </div>
-    <br/>
   </div>
 </template>
 
 <script>
-import { ref, set } from '@firebase/database'
-import Canvas from './Canvas'
+import { onValue, ref } from '@firebase/database'
+import DiaryEditor from './DiaryEditor.vue'
 
 export default {
   components: {
-    Canvas
+    DiaryEditor
+  },
+  props: ['props'],
+  watch: {
+    props () {
+      // whenever props(checked date) changes, check diary
+      this.checkHasDiary()
+    }
   },
   data () {
     return {
+      isEditMode: true,
+      hasDiary: false,
+      isToday: true,
       title: '',
-      moodSelected: 'Very Good',
-      moodOptions: [
-        { text: ' Best ', value: 'Very Good' },
-        { text: ' Nice', value: 'second' },
-        { text: ' OK', value: 'Just OK' },
-        { text: ' Bad', value: 'Bad' }
-      ],
+      mood: '',
+      sketch: '',
       comment: ''
     }
   },
-  props: ['props'],
+  mounted () {
+    // first check diary
+    this.checkHasDiary()
+  },
   methods: {
-    callCanvas () {
-      const date = this.props.replace(/-/g, '') // 2022-06-11 -> 20220611
-      this.$refs.canvas.downloadImage(date)
-    },
-    saveDiary (imageRef) {
+    checkHasDiary () {
       const uid = localStorage.getItem('user')
-      const date = this.props.replace(/-/g, '')
-      set(ref(this.$db, 'diary/' + uid + '/' + date), {
-        title: this.title,
-        mood: this.moodSelected, // todo: mood 숫자로 저장하기
-        image: imageRef,
-        comment: this.comment
+      const userDiaryRef = ref(this.$db, 'diary/' + uid)
+
+      onValue(userDiaryRef, (snapshot) => {
+        const date = this.props.replace(/-/g, '')
+
+        let found = false
+        let contents = null
+        for (const elem in snapshot.val()) {
+          if (elem === date) {
+            found = true
+            contents = snapshot.val()[elem]
+            break
+          }
+        }
+        found ? this.hasDiary = true : this.hasDiary = false
+        if (contents) {
+          this.title = contents['title']
+          this.mood = contents['mood']
+          this.sketch = contents['image']
+          this.comment = contents['comment']
+        }
+
+        const dt = new Date()
+        const today = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
+        today === this.props ? this.isToday = true : this.isToday = false
+        if (!this.hasDiary && this.isToday) {
+          this.isEditMode = true
+        } else {
+          this.isEditMode = false
+        }
       })
+    },
+    setIsEditMode () {
+      this.isEditMode = !this.isEditMode
     }
   }
 }
 </script>
 
 <style scoped>
-.container {
+.diary-content{
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+}
+.row-box {
   display: flex;
-  flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
+  flex-direction: row;
+  border-bottom: dashed 2px;
+  justify-content: space-between;
 }
-.textarea {
-  margin-left: 5em;
-  margin-right: 5em;
+.sketch{
+  width: 45vw;
+  height: 45vh;
+  object-fit: contain;
+  margin: 5px;
+  box-shadow: 2px 2px 7px 0px rgba(201, 201, 201, 1);
 }
-h2 {
-  text-align: left;
-}
-.top {
-  margin-top: 1em;
-}
-.top3 {
-  margin-top: 3em;
-}
-.left2 {
-  margin-left: 3em;
-}
-.canvas {
-  width: 25em;
-}
-.saveButton {
-  float: right;
+.comment {
+  height: 30%;
+  background-color: aqua;
+  margin: 5px;
 }
 </style>
