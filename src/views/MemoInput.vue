@@ -1,8 +1,6 @@
 <template>
-  <div id="todoinput">
-    <input type="text" v-model="tag"/>
-    <input type="text" v-model="content"/>
-    <button type="button" @click="addMemo">ADD</button>
+  <div id="memoinput">
+    <button type="button" class="addButton shadow" @click="addMemo"> + </button>
   </div>
 </template>
 
@@ -10,18 +8,29 @@
 export default {
   data () {
     return {
-      tag: '',
-      content: ''
     }
   },
   methods: {
     addMemo () {
-      this.$emit('addMemo', this.content, this.tag)
-      this.content = ''
-      this.tag = ''
+      this.$emit('addMemo')
     }
   }
 }
 </script>
 
-<style></style>
+<style scoped>
+#memoinput {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+.addButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 5vh;
+    background-color: plum;
+    color: white;
+    font-size: 30px;
+}
+</style>
