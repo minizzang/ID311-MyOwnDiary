@@ -35,14 +35,14 @@ export default {
 #memoList {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: flex-start;
   flex-wrap: wrap;
   overflow: scroll;
   width: 90%;
   height: 60vh;
-  padding-right: 2em;
-  padding-left: 2em;
+  padding: 1em;
+  padding-left: 3em;
   margin-left: 1em;
   margin-right: 1em;
   margin-top: 0.5em;
