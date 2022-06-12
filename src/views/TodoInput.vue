@@ -39,6 +39,6 @@ export default {
   font-size: 0.9rem;
   width: 80%;
   text-align: center;
-  border-color: black;
+  border: solid 1px black;
 }
 </style>

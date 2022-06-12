@@ -2,7 +2,7 @@
   <div>
     <h1>Todo List</h1>
     <TodoInput v-on:addTodo="addTodo"/>
-    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"/>
+    <TodoList v-bind:propsdata="todoItemsWithDate" @removeTodo="removeTodo" @checkTodo="checkTodo"/>
     <TodoFooter v-on:removeAll="clearAll"/>
   </div>
 </template>
@@ -12,9 +12,11 @@ import TodoInput from './TodoInput'
 import TodoList from './TodoList'
 import TodoFooter from './TodoFooter'
 export default {
+  props: ['props'],
   data () {
     return {
-      todoItems: []
+      todoItemsWithDate: [],
+      temp: 1
     }
   },
   components: {
@@ -25,23 +27,56 @@ export default {
   methods: {
     created () {
       // firebase 연동
-      this.todoItems = []
+      this.todoItemsWithDate = []
     },
     addTodo (todoItem) {
-      if (this.todoItems.length >= 10) {
-        alert('Too Many Todo Items! (Max: 10)')
+      let item = {
+        text: todoItem,
+        checked: false
+      }
+      for (let i = 0; i < this.todoItemsWithDate.length; i++) {
+        if (this.props === this.todoItemsWithDate[i].date) {
+          for (let j = 0; j < this.todoItemsWithDate[i].todoItems.length; j++) {
+            if (this.todoItemsWithDate[i].todoItems[j].text === todoItem) {
+              alert('Already exist Todo!')
+              return
+            }
+          }
+          this.todoItemsWithDate[i].todoItems.push(item)
+          return
+        }
+      }
+      let dateItem = {
+        date: this.props,
+        todoItems: [item]
+      }
+      this.todoItemsWithDate.push(dateItem)
+      this.sortTodo()
+      console.log(this.todoItemsWithDate.length)
+    },
+    checkTodo (index, index2) {
+      let item = this.todoItemsWithDate[index].todoItems[index2]
+      item.checked = !item.checked
+      this.todoItemsWithDate[index].todoItems.splice(index2, 1)
+      if (item.checked) {
+        this.todoItemsWithDate[index].todoItems.push(item)
       } else {
-        this.todoItems.push(todoItem)
-        console.log(this.todoItems.length)
+        this.todoItemsWithDate[index].todoItems.unshift(item)
       }
     },
-    removeTodo (todoItem, index) {
+    removeTodo (todoItem, index, index2) {
       // firebase 연동 부분
-      this.todoItems.splice(index, 1)
+      this.todoItemsWithDate[index].todoItems.splice(index2, 1)
+      if (this.todoItemsWithDate[index].todoItems.length === 0) {
+        this.todoItemsWithDate.splice(index, 1)
+      }
+    },
+    sortTodo () {
+      this.todoItemsWithDate.sort((a, b) => a.date > b.date ? 1 : -1)
     },
     clearAll () {
       // firebase 연동 부분
-      this.todoItems = []
+      this.todoItemsWithDate = []
     }
   }
 }
