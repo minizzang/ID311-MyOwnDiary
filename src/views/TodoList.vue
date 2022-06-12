@@ -41,7 +41,8 @@ export default {
 <style>
 
 #todoSection {
-  max-height: 600px;
+  display: block;
+  max-height: 70%;
 }
 
 #todoSection::-webkit-scrollbar {
