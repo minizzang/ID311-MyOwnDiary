@@ -1,13 +1,22 @@
 <template>
   <div class="container">
     <h3 class="top bold">🌼 Welcome! 🌼</h3>
-    <img thumbnail fluid src="../assets/sallyBrown.png" alt="Profile Image" height="200px" width="300px" class="profile"/>
-    <b-row align-h="center" class="top">
-      <h5 class="bold">{{this.userName}}</h5>
-    </b-row>
-    <b-row align-h="center">
-      <h6>{{this.userIntro}}</h6>
-    </b-row>
+    <ProfileEditor v-bind:props="[userName, userIntro]" v-if="this.isEditProfile" @uploadProfile="setEditProfile"></ProfileEditor>
+    <div v-else>
+      <img thumbnail fluid :src="userImg" alt="Profile Image" height="200px" width="300px" class="profile"/>
+      <b-row align-h="center" class="top">
+        <h5 class="bold username">
+          {{this.userName}}
+          <button
+            @click="setEditProfile"
+            class="editButton"
+          ><i class="fa-solid fa-pen"></i></button>
+        </h5>
+      </b-row>
+      <b-row align-h="center">
+        <h6>{{this.userIntro}}</h6>
+      </b-row>
+    </div>
     <b-row class="justify-content-md-center">
       <div class="test">
         <v-date-picker
@@ -26,13 +35,19 @@
 
 <script>
 import { onValue, ref } from '@firebase/database'
+import ProfileEditor from './ProfileEditor.vue'
 
 export default {
+  components: {
+    ProfileEditor
+  },
   data () {
     return {
       maxDate: '2022-06-04', // todo: prevent future dates
       userName: '',
       userIntro: '',
+      userImg: '',
+      isEditProfile: true,
       pickerDate: new Date().toISOString().substring(0, 10),
       savedDayArray: null,
       savedDayMoodMap: null
@@ -52,11 +67,22 @@ export default {
       const uid = localStorage.getItem('user')
       const userNameRef = ref(this.$db, 'users/' + uid + '/nickname')
       const userIntroRef = ref(this.$db, 'users/' + uid + '/intro')
+      const userImgRef = ref(this.$db, 'users/' + uid + '/img')
       onValue(userNameRef, (snapshot) => {
         this.userName = snapshot.val()
       })
       onValue(userIntroRef, (snapshot) => {
         this.userIntro = snapshot.val()
+      })
+      onValue(userImgRef, (snapshot) => {
+        this.userImg = snapshot.val()
+        if (this.userImg == null) {
+          const defaultImgRef = ref(this.$db, 'users/defaultImg')
+          onValue(defaultImgRef, (snapshot1) => {
+            this.userImg = snapshot1.val()
+            console.log(this.userImg)
+          })
+        }
       })
     },
     passDate () { // pass the selected date to Container.vue
@@ -84,6 +110,8 @@ export default {
 
         this.savedDayArray = array
         this.savedDayMoodMap = map
+
+        this.isEditProfile = false
       })
     },
     getColor (date) {
@@ -99,6 +127,9 @@ export default {
         case 'Eww.. Tired..':
           return 'rgb(79,193,40)'
       }
+    },
+    setEditProfile () {
+      this.isEditProfile = !this.isEditProfile
     }
   }
 }
@@ -118,7 +149,16 @@ export default {
   margin-top: 1em;
 }
 .test {
+  width: 30%;
   position: absolute;
   bottom: 0;
+}
+.username {
+  padding-left: 26px;
+}
+.editButton {
+    margin-left: 5px;
+    color: black;
+    font-size: 15px;
 }
 </style>
