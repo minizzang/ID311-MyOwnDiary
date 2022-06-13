@@ -166,6 +166,7 @@ export default {
   align-content: flex-end;
   margin-left: 3em;
   margin-right: 20%;
+  z-index: 5000;
 }
 h2 {
   text-align: left;

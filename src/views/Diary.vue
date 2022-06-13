@@ -5,7 +5,7 @@
     <div v-else class="diaryBox">
       <div v-if="this.hasDiary" class="diary-content">
         <div class="row-box">
-          <h3><{{title}}></h3>
+          <h3>{{title}}</h3>
           <h3 class="moodText">{{mood}}</h3>
         </div>
         <img
@@ -13,7 +13,7 @@
           class="sketch"
         />
         <div class="comment"> {{comment}}</div>
-        <div v-if="this.isToday">
+        <div>
           <button
             @click="setIsEditMode"
             class="writeButton shadow rightBottom"
@@ -102,7 +102,7 @@ export default {
     setIsEditMode () {
       const dt = new Date()
       const today = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
-      if (today > this.props) { this.isEditMode = !this.isEditMode }
+      if (today >= this.props) { this.isEditMode = !this.isEditMode }
       if (today < this.props) { alert('You can not write the future diary!') }
     }
   }
