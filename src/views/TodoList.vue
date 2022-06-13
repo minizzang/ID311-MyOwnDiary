@@ -1,5 +1,5 @@
 <template>
-  <section style="overflow: scroll" id="todoSection">
+  <section style="overflow: scroll; z-index: 5000;" id="todoSection">
     <transition-group name="list-date" tag="ul" id="todoWithDateUl">
       <li v-for="(todoItemWithDate, index) in propsdata" :key="todoItemWithDate.date + index" id="todoWithDateLi">
         <div id="todoDate">
