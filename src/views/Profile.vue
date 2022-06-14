@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3 class="top bold">🌼 Welcome! 🌼</h3>
+    <h3 class="top bold"></h3>
     <ProfileEditor v-bind:props="[userName, userIntro]" v-if="this.isEditProfile" @uploadProfile="setEditProfile"></ProfileEditor>
     <div v-else>
       <img thumbnail fluid :src="userImg" alt="Profile Image" height="200px" width="300px" class="profile"/>
