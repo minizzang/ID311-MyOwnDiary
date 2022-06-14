@@ -21,14 +21,22 @@
         </div>
       </div>
       <div v-else>
-        <br/>
-        *** There's no diary yet. You can write it if it's the past one. ***
-        <br/>
-        <br/>
-        <button
-          @click="setIsEditMode"
-          class="writeButton shadow"
-        > Click to Write </button>
+        <div v-if="this.checkIsFuture() === false">
+          <br/>
+          *** There's no diary yet. Record your past memories! ***
+          <br/>
+          <br/>
+          <button
+            @click="setIsEditMode"
+            class="writeButton shadow"
+          > Click to Write </button>
+        </div>
+        <div v-else>
+          <br/>
+          *** You can't write future diary ***
+          <br/>
+          <br/>
+        </div>
       </div>
     </div>
   </div>
@@ -99,11 +107,14 @@ export default {
         }
       })
     },
-    setIsEditMode () {
+    checkIsFuture () {
       const dt = new Date()
       const today = new Date(dt.getTime() - (dt.getTimezoneOffset() * 60000)).toISOString().substring(0, 10)
-      if (today >= this.props) { this.isEditMode = !this.isEditMode }
-      if (today < this.props) { alert('You can not write the future diary!') }
+      if (today >= this.props) return false
+      else if (today < this.props) return true
+    },
+    setIsEditMode () {
+      this.isEditMode = !this.isEditMode
     }
   }
 }
