@@ -44,6 +44,22 @@ export default {
   margin-bottom: 0.5em;
   background-color: #C3B1E1;
 }
+#memoList::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+#memoList::-webkit-scrollbar-thumb {
+  border-radius: 3.5px;
+  background-color: #9b75a4;
+}
+#memoList::hover {
+  background-color: #adb5bd;
+}
+
+#memoList::-webkit-scrollbar-track {
+    background: #ffffff;
+}
 .memoEach {
   display: flex;
   align-content: flex-start;
@@ -57,6 +73,22 @@ export default {
   margin-right: 0.5em;
   overflow: scroll;
   background-color: whitesmoke;
+}
+.memoText::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+.memoText::-webkit-scrollbar-thumb {
+  border-radius: 3.5px;
+  background-color: #9b75a4;
+}
+.memoText::hover {
+  background-color: #adb5bd;
+}
+
+.memoText::-webkit-scrollbar-track {
+    background: #ffffff;
 }
 .memoButton {
   height: 20px;

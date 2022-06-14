@@ -117,14 +117,18 @@ export default {
       this.$refs.canvas.downloadImage(date)
     },
     saveDiary (imageRef) {
-      const uid = localStorage.getItem('user')
-      const date = this.date.replace(/-/g, '')
-      set(ref(this.$db, 'diary/' + uid + '/' + date), {
-        title: this.title,
-        mood: this.moodSelected, // todo: mood 숫자로 저장하기
-        image: imageRef,
-        comment: this.comment
-      })
+      if (!this.title || !this.moodSelected) {
+        alert('Enter the title and select your mood')
+      } else {
+        const uid = localStorage.getItem('user')
+        const date = this.date.replace(/-/g, '')
+        set(ref(this.$db, 'diary/' + uid + '/' + date), {
+          title: this.title,
+          mood: this.moodSelected, // todo: mood 숫자로 저장하기
+          image: imageRef,
+          comment: this.comment
+        })
+      }
     }
   }
 }
