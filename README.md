@@ -1,10 +1,13 @@
-# ID311 Final Group Project
-## 0. Table of Contents
+# ID311 Final Group Project, ***My World***
 
-- [ID311 Final Group Project](#id311-final-group-project)
-  - [0. Table of Contents](#0-table-of-contents)
+- [ID311 Final Group Project, ***My World***](#id311-final-group-project-my-world)
   - [1. Basic Info](#1-basic-info)
-  - [2. Description of the Application, ***My World***](#2-description-of-the-application-my-world)
+  - [2. Description of the Application](#2-description-of-the-application)
+    - [1) Login](#1-login)
+    - [2) Profile](#2-profile)
+    - [3) Diary](#3-diary)
+    - [4) Todo](#4-todo)
+    - [5) Memo](#5-memo)
   - [3. Organization of the Code](#3-organization-of-the-code)
     - [1) Front-end](#1-front-end)
     - [2) Back-end](#2-back-end)
@@ -17,7 +20,13 @@
     - [2) BootstrapVue](#2-bootstrapvue)
     - [3) Vuetify](#3-vuetify)
     - [4) Fabric](#4-fabric)
-  - [6. Build Setup](#6-build-setup)
+  - [6. Main Challenges](#6-main-challenges)
+    - [1) Vue](#1-vue-1)
+    - [2) Firebase](#2-firebase)
+    - [3) Responsive Web Design](#3-responsive-web-design)
+  - [7. Improvement Measures](#7-improvement-measures)
+    - [1) Responsive Web Design](#1-responsive-web-design)
+  - [8. Reference & Helps](#8-reference--helps)
   
 ## 1. Basic Info
 - **Team Number**: 2
@@ -26,9 +35,9 @@
 - **URL to Demo**: [Application](https://id311-my-world)web)app/)
 - **URL to Video**: [Demo Video]()
 
-## 2. Description of the Application, ***My World***
-There are `5` big pages here: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
-> Login 🔑
+## 2. Description of the Application
+There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
+### 1) Login
 
 <div style="display: flex;">
     <img src="./src/assets//readme/Login-demo.png" alt="login" height="300" style="padding: 10px;"/>
@@ -39,17 +48,17 @@ There are `5` big pages here: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
 </div>
 
 
-> Profile 😜
+### 2) Profile
 
 <div style="display: flex;">
     <img src="./src/assets//readme/Profile-demo.png" alt="profile" height="300" style="padding: 10px;"/>
     <div style="padding: 10px">
-        <p>After you sign in, you can see your profile. Your name will be set to the default name your account has. The image and introduction will have the default value we provide. You can edit the profile anytime you want by clicking the ✏️ Pencil Emoji ✏️.</p>
+        <p>After you sign in, you can see your profile. Your name will be set to the default name your account has. The image and introduction will have the default value we provide. You can edit the profile anytime you want by clicking the <i>✏️Pencil Emoji✏️</i>.</p>
         <p> Also, there is a calendar below the profile. You can check the date of today here. Next in the <code>Diary</code> and <code>Todo</code>, you are going to use this calendar a lot. Please stay tuned! </p>
     </div>
 </div>
 
-> Diary 📒
+### 3) Diary
 
 <div style="display: flex;">
     <img src="./src/assets//readme/Diary-demo.png" alt="diary" height="300" style="padding: 10px;"/>
@@ -76,25 +85,23 @@ There are `5` big pages here: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
     </div>
 </div>
 
-> Todo ✔️
+### 4) Todo
 
 <div style="display: flex;">
     <img src="./src/assets//readme/Todo-demo.png" alt="todo" height="300" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>To add something on the <code>Todo</code> tab, the very first step is selecting the date on the calendar. Typing something in the input box and press the <code>+</code> button, it will be added in the list of that day. But you don't have to be afraid of making mistakes; you can delete them. If you want to remove all at once, just click the <code>Clear All</code> button.</p>
-        <p>And this to-do list is auto-saved every time you add or remove something. You don't have to do that manually.</p>
     </div>
 </div>
 
 
-> Memo 📝
+### 5) Memo
 
 <div style="display: flex;">
     <img src="./src/assets//readme/Memo-demo.png" alt="memo" height="300" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>Last but not least, it's <code>Memo</code> board. Pressing the <code>+</code> button, a new empty sticky note will be created. You can write down anything on it.</p>
         <p>Oops! Did you write too much on the memo? Then just try adjusting its height or simply scroll down to see all the contents inside. Similarly, if you make too many memos, scroll the whole memo board.</p>
-        <p>Of course, his memo board has the auto-saved function as well.</p>
     </div>
 </div>
 
@@ -105,6 +112,18 @@ There are `5` big pages here: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
 
 ## 4. Issue
 ### 1) Special Features
+- **Auto-Save**
+  - To-do list and memo board are auto-saved every time you add or remove something. You don't have to do that manually.
+- **Interaction** between Elements and a Pointing Device
+  - On the `Diary` tab, you can choose the mood of the day. When you put the cursor on the image, its size becomes bigger. If you remove the cursor, it shrinks again. If you click it, its size is fixed to the bigger one.
+- **`Calendar`**
+  - The calendar is shown regardless of the tab, and interacts with many components at once. More in detail, we use the same calendar both on the `Diary` and `Todo` tab. 
+    - `Diary`
+      - You can pick the date to see the diary of that day.
+      - When you choose the mood and save, the small colored dot will be marked on the calendar. Those dots can have different colors responding to the mood of that day.
+    - `Todo`
+      - You can pick the date before adding the to-do thing.
+  - Features were descripted more in detail in the [2. Description of the Application](#2-description-of-the-application). 
 ### 2) Known Bugs
 - `Welcome_KAIST` Connecting Problem
   - A very weird thing happens when we connect the wi-fi `Welcome_KAIST` provided by KAIST and visit the application. You can't save the diary! It keeps making timeout only to fail. However, using other wi-fi or your own hotspot, it works normally again. We tried to fix this bug, but finally we decided that this wan't our problem, but `Welcome_KAIST`'s.
@@ -112,47 +131,57 @@ There are `5` big pages here: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
 ## 5. Tried Novel Feature & Library & Tool
 ### 1) [Vue](https://vuejs.org/)
 This is the introduction in the official website of Vue:
-> ***Vue*** is a _JavaScript framework_ for building user interfaces. It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and component-based programming model that helps you efficiently develop user interfaces, be it simple or complex.
+> **Vue** is a _JavaScript framework_ for building user interfaces. It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and component-based programming model that helps you efficiently develop user interfaces, be it simple or complex.
 
-We used the ***module system*** of Vue to control overall data in the application.
+We used the **module system** of Vue to control overall data in the application. In our code, a single .vue file works as the single independent component. Parent components import child components, and get or send the property data. Child components export what they have to their parents.
 
-In our code, a single .vue file works as the single independent component. Parent components import child components, and get or send the property data. Child components export what they have to their parents.
+Also, ***My World*** is a single page application based on Vue Router.
+
 
 ### 2) [BootstrapVue](https://bootstrap-vue.org/)
 This is the introduction in the official website of BootstrapVue:
-> ***BootstrapVue*** is the popular front-end CSS library. With it, you can build responsive, mobile-first, and ARIA accessible projects on the web using Vue.js.
+> **BootstrapVue** is the popular front-end CSS library. With it, you can build responsive, mobile-first, and ARIA accessible projects on the web using Vue.js.
 
 We first tried to use the components provided by BootstrapVue including calendar, input radio, etc. And actually, we found that it worked really well. It let us control the data easily. But the only problem was the design style. We thought that it didn't match to our application concept. So we decided to use another library, _Vuetify_. We also made and customized some of them ourselves.
 
 ### 3) [Vuetify](https://vuetifyjs.com/en/)
 This is the introduction in the official website of Vuetify:
-> ***Vuetify*** is a Vue UI Library with beautifully handcrafted Material Components. No design skills required — everything you need to create amazing applications is at your fingertips.
+> **Vuetify** is a Vue UI Library with beautifully handcrafted Material Components. No design skills required — everything you need to create amazing applications is at your fingertips.
 
 We used Vuetify to create and manage the `calendar`.
 ### 4) [Fabric](http://fabricjs.com/)
 This is the introduction in the official website of Fabric.js:
-> ***Fabric.js*** is a powerful and simple Javascript HTML5 canvas library. Fabric provides interactive object model on top of canvas element. Fabric also has SVG-to-canvas (and canvas-to-SVG) parser.
+> **Fabric.js** is a powerful and simple Javascript HTML5 canvas library. Fabric provides interactive object model on top of canvas element. Fabric also has SVG-to-canvas (and canvas-to-SVG) parser.
 
 We used Fabric.js to create and manage the `canvas` in the `Diary` tab. You can select the brush color and size. It's also possible to upload the images you want and edit them freely. After drawing all, download and keep it. It's a really strong feature of Fabric.js.
 
-## 6. Build Setup
+## 6. Main Challenges
+### 1) Vue
+All 3 team members were new to Vue. The followings are what we studied and used a lot:
+- Basic Grammar
+- Reactivity
+- Defining a Component
+- Single-File Components
+- Form Input Binding
+- Event Handliing
+- Prop Declaration & Passing
+- Plugins
+- Routing
+- etc
 
-``` bash
-# install dependencies
-npm install
+### 2) Firebase
 
-# serve with hot reload at localhost:8080
-npm run dev
+### 3) Responsive Web Design
+_Responsive Web Design_ is about using HTML and CSS to automatically resize, hide, shrink, or enlarge, a website, to make it look good on all devices. We make ***My World*** a responsive web to allow the user to see whole thing rgardless of the size or proportion of the display. So when you change the size of the window, most elements are resized and relocated.
 
-# build for production with minification
-npm run build
+## 7. Improvement Measures
+### 1) Responsive Web Design
+Still, there are some issues with the layout. It doesn't fit that well if you shrink or enlarge the window. If you the change the size of the system font, some elements overlap each other or escape the parent container. We can fix these problems further.
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
+## 8. Reference & Helps
+- [cyworld](https://cyworld.com/cyworld/welcome)
+- [Vue](https://vuejs.org/)
+- [BootstrapVue](https://bootstrap-vue.org/)
+- [Vuetify](https://vuetifyjs.com/en/)
+- [Fabric](http://fabricjs.com/)
+- [W3Schools](https://www.w3schools.com/default.asp)
