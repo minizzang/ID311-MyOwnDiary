@@ -40,10 +40,9 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ### 1) Login
 
 <div style="display: flex;">
-    <img src="./src/assets//readme/Login-demo.png" alt="login" height="300" style="padding: 10px;"/>
+    <img src="./src/assets//readme/Login-demo.png" alt="login" height="400" style="padding: 10px;"/>
     <div style="padding: 10px">
-        <p> This is the first page you meet when you visit our application. You can <i>Login</i> or <i>SignUp</i> here. All of the contents you remain will be saved personally so that you can archive every thing. </p>
-        <p> Please be careful to write down your email account properly! It only accepts the valid type of the address. If you type wrong, it will alert you.</p>
+        <p> This is the first page you meet when you visit our application. You can <i>Login</i> or <i>SignUp</i> here. All of the contents you remain will be saved personally so that you can archive every thing. Please be careful to write down your email account properly! It only accepts the valid type of the address. If you type wrong, it will alert you.</p>
     </div>
 </div>
 
@@ -51,7 +50,7 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ### 2) Profile
 
 <div style="display: flex;">
-    <img src="./src/assets//readme/Profile-demo.png" alt="profile" height="300" style="padding: 10px;"/>
+    <img src="./src/assets//readme/Profile-demo.png" alt="profile" height="400" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>After you sign in, you can see your profile. Your name will be set to the default name your account has. The image and introduction will have the default value we provide. You can edit the profile anytime you want by clicking the <i>✏️Pencil Emoji✏️</i>.</p>
         <p> Also, there is a calendar below the profile. You can check the date of today here. Next in the <code>Diary</code> and <code>Todo</code>, you are going to use this calendar a lot. Please stay tuned! </p>
@@ -61,7 +60,7 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ### 3) Diary
 
 <div style="display: flex;">
-    <img src="./src/assets//readme/Diary-demo.png" alt="diary" height="300" style="padding: 10px;"/>
+    <img src="./src/assets//readme/Diary-demo.png" alt="diary" height="400" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>When you click the <code>Diary</code> tab, the page consists of many inputs and buttons will be shown. It's the diary of <strong>today</strong>. You can add the title and contents, select the mood, and draw anything on canvas. We're going to tell you more about <strong>canvas</strong> on the following chapters.</p>
         <p>
@@ -88,7 +87,7 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ### 4) Todo
 
 <div style="display: flex;">
-    <img src="./src/assets//readme/Todo-demo.png" alt="todo" height="300" style="padding: 10px;"/>
+    <img src="./src/assets//readme/Todo-demo.png" alt="todo" height="400" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>To add something on the <code>Todo</code> tab, the very first step is selecting the date on the calendar. Typing something in the input box and press the <code>+</code> button, it will be added in the list of that day. But you don't have to be afraid of making mistakes; you can delete them. If you want to remove all at once, just click the <code>Clear All</code> button.</p>
     </div>
@@ -98,7 +97,7 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ### 5) Memo
 
 <div style="display: flex;">
-    <img src="./src/assets//readme/Memo-demo.png" alt="memo" height="300" style="padding: 10px;"/>
+    <img src="./src/assets//readme/Memo-demo.png" alt="memo" height="400" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>Last but not least, it's <code>Memo</code> board. Pressing the <code>+</code> button, a new empty sticky note will be created. You can write down anything on it.</p>
         <p>Oops! Did you write too much on the memo? Then just try adjusting its height or simply scroll down to see all the contents inside. Similarly, if you make too many memos, scroll the whole memo board.</p>
