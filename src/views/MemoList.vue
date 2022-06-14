@@ -24,7 +24,7 @@ export default {
       for (let i = 0; i < this.memos.length; i++) {
         this.memoContents[i] = this.memos[i]
       }
-      console.log(this.memoContents)
+      // console.log(this.memoContents)
       this.$emit('removeMemo', memos, memoContents, index)
     }
   }
