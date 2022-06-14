@@ -17,7 +17,7 @@
           <button
             @click="setIsEditMode"
             class="writeButton shadow rightBottom"
-          >다시 쓰기</button>
+          >Edit</button>
         </div>
       </div>
       <div v-else>
@@ -113,7 +113,7 @@ export default {
 .rightBottom {
   position: absolute;
   bottom: 2vh;
-  right: 15vh;
+  right: 11vw;
 }
 .moodText {
   color: #C3B1E1;
@@ -152,10 +152,12 @@ export default {
 .comment {
   display: flex;
   flex-direction: row;
+  word-break: break-all;
+  overflow-y: scroll;
   margin-top: 1vh;
   margin-bottom: 1vh;
   padding: 1vh;
-  height: 50%;
+  height: 11vh;
   width: 100%;
   box-shadow: 2px 2px 7px 0px rgba(201, 201, 201, 1);
   /* border: 1px solid black; */
@@ -167,4 +169,21 @@ export default {
 .top {
   padding-top: 3vh;
 }
+.comment::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+.comment::-webkit-scrollbar-thumb {
+  border-radius: 3.5px;
+  background-color: #C3B1E1;
+}
+.comment::hover {
+  background-color: #adb5bd;
+}
+
+.comment::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
 </style>
