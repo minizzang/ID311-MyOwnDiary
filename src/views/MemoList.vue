@@ -1,12 +1,9 @@
 <template>
   <div id="memoList">
-    <div class="memoEach" v-for="(number) in memos" :key="number.id">
-      <textarea class="shadow memoText" v-model="number.value"></textarea>
-      {{memoMessage}}
-      <!-- {{number}}th memo -->
+    <div class="memoEach" v-for="(elem) in memos" :key="elem.id">
+      <textarea class="shadow memoText" v-model="elem.value" @input="inputMemo(elem, $event)"></textarea>
       <div>
-          <button type="button" class="memoButton" @click="removeMemo(memos, [], number)"><strong>x</strong></button>
-          <!-- <button type="button" class="memoButton" @click="saveMemo(memos, number)">✓</button> -->
+        <button type="button" class="memoButton" @click="removeMemo(elem)"><strong>x</strong></button>
       </div>
     </div>
   </div>
@@ -15,17 +12,15 @@
 <script>
 export default {
   props: {
-    memos: [],
-    memoContents: [],
-    memoMessage: []
+    memos: []
   },
   methods: {
-    removeMemo (memos, memoContents, index) {
-      for (let i = 0; i < this.memos.length; i++) {
-        this.memoContents[i] = this.memos[i]
-      }
-      console.log(this.memoContents)
-      this.$emit('removeMemo', memos, memoContents, index)
+    removeMemo (elem) {
+      this.$emit('removeMemo', elem)
+    },
+    inputMemo (elem, event) { // used input event for Korean IME problem
+      elem.value = event.target.value
+      this.$emit('saveMemo', elem)
     }
   }
 }
@@ -50,26 +45,26 @@ export default {
   background-color: #C3B1E1;
 }
 .memoEach {
-    display: flex;
-    align-content: flex-start;
-    padding: 0.5em;
+  display: flex;
+  align-content: flex-start;
+  padding: 0.5em;
 }
 .memoText {
- width: 20vh;
- height: 20vh;
- padding: 0.5em;
- border-radius: 10px;
- margin-right: 0.5em;
- overflow: scroll;
- background-color: whitesmoke;
+  width: 20vh;
+  height: 20vh;
+  padding: 0.5em;
+  border-radius: 10px;
+  margin-right: 0.5em;
+  overflow: scroll;
+  background-color: whitesmoke;
 }
 .memoButton {
-    height: 20px;
-    width: 20px;
-    margin-bottom: 1vh;
-    border-radius: 100%;
-    color: white;
-    text-align: center;
-    line-height: 1em;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 1vh;
+  border-radius: 100%;
+  color: white;
+  text-align: center;
+  line-height: 1em;
 }
 </style>

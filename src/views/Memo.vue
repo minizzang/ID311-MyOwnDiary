@@ -2,7 +2,7 @@
   <div id="memoApp">
       <h2 class="top">Memo Board</h2>
       <div id="memoBoard">
-        <MemoList :memos="memos" :memoContents="memoContents" @removeMemo="removeMemo"/>
+        <MemoList :memos="memos" @removeMemo="removeMemo" @saveMemo="saveMemo"/>
       </div>
       <MemoInput @addMemo="addMemo" />
   </div>
@@ -11,6 +11,7 @@
 <script>
 import MemoList from './MemoList.vue'
 import MemoInput from './MemoInput.vue'
+import {onValue, push, ref, remove, update} from '@firebase/database'
 
 export default {
   name: 'memoApp',
@@ -19,33 +20,45 @@ export default {
     MemoInput
   },
   data () {
-    // all the memo data is in the `memoContents`, not `memos`
     return {
-      memos: [],
-      tags: [],
-      memoContents: [],
-      numMemos: 0
+      uid: '',
+      memos: []
     }
   },
-  methods: {
-    addMemo () {
-      this.memos.push({id: this.numMemos, value: ''})
-      this.memoContents.push({id: this.numMemos, value: ''})
-      // console.log(this.memos)
-      // console.log(this.memoContents)
-      this.numMemos++
-    },
-    removeMemo (memos, memoContents, number) {
-      this.memoContents = memoContents
-      // console.log(memoContents)
-      for (let i = memos.length; i >= 0; i--) {
-        if (this.memos[i] === number) {
-          this.memoContents.splice(i, 1)
-        }
+  mounted () {
+    this.uid = localStorage.getItem('user')
+
+    // get memos from firebase db
+    const memoRef = ref(this.$db, 'memo/' + this.uid)
+    onValue(memoRef, (snapshot) => {
+      this.memos = []
+      const memoData = snapshot.val()
+      if (memoData != null) {
+        this.memos = []
+        Object.keys(memoData).forEach((key) => {
+          this.memos.push({
+            id: key,
+            value: memoData[key].value
+          })
+        })
       }
-      this.memos = this.memos.filter(el => el !== number)
-      console.log(this.memos)
-      console.log(this.memoContents)
+    })
+  },
+  methods: {
+    // store memo to db
+    addMemo () {
+      push(ref(this.$db, 'memo/' + this.uid), {
+        value: ''
+      }).catch((err) => console.log(err))
+    },
+    // delete memo from db
+    removeMemo (elem) {
+      remove(ref(this.$db, 'memo/' + this.uid + '/' + elem.id))
+    },
+    saveMemo (elem) {
+      update(ref(this.$db, 'memo/' + this.uid + '/' + elem.id), {
+        value: elem.value
+      }).catch((err) => console.log(err))
     }
   }
 }
