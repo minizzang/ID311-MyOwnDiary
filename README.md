@@ -11,7 +11,7 @@
   - [3. Organization of the Code](#3-organization-of-the-code)
     - [1) Front-end](#1-front-end)
     - [2) Back-end](#2-back-end)
-    - [3) Diagram](#3-diagram)
+    - [3) DB Structure](#3-db-structure)
   - [4. Issue](#4-issue)
     - [1) Special Features](#1-special-features)
     - [2) Known Bugs](#2-known-bugs)
@@ -87,7 +87,7 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ### 4) Todo
 
 <div style="display: flex;">
-    <img src="./src/assets//readme/Todo-demo.png" alt="todo" height="400" style="padding: 10px;"/>
+    <img src="./src/assets//readme/Todo-update.png" alt="todo" height="400" style="padding: 10px;"/>
     <div style="padding: 10px">
         <p>To add something on the <code>Todo</code> tab, the very first step is selecting the date on the calendar. Typing something in the input box and press the <code>+</code> button, it will be added in the list of that day. But you don't have to be afraid of making mistakes; you can delete them. If you want to remove all at once, just click the <code>Clear All</code> button.</p>
     </div>
