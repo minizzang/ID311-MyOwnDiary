@@ -46,6 +46,10 @@ export default {
   mounted () {
     const uid = localStorage.getItem('user')
     uid !== null ? this.userSigned = true : this.userSigned = false
+    if (this.userSigned) {
+      this.path = '/diary'
+      return router.replace(this.path)
+    }
 
     // convert to Korea time zone
     const dt = new Date()
@@ -53,7 +57,6 @@ export default {
   },
   watch: {
     $route (to, from) {
-      console.log(to.name, from.name)
       if (from.name === 'Login' && to.name !== 'Signup') { // Login -> show user profile
         this.userSigned = true
       } else if (to.name === 'Login') { // Logout

@@ -31,7 +31,6 @@ export default {
       this.$emit('removeTodo', todoItem, index, index2)
     },
     changed (index, index2) {
-      console.log(index)
       this.$emit('checkTodo', index, index2)
     }
   }
