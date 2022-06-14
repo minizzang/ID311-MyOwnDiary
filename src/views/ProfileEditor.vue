@@ -3,11 +3,11 @@
     <b-container fluid>
         <img thumbnail fluid src="../assets/blankProfile.jpg" alt="Profile Image" height="150px" width="150px" class="profile"/>
         <div>
-            <label for="addImage" class="addBtn">
+            <label for="addproImage" class="addBtn">
                 <font-awesome-icon icon="fa-solid fa-image" class="image-icon center" />
             </label>
         </div>
-        <input id="addImage" ref="fileInput" type="file" accept="image/*" @input="selectImgFile">
+        <input id="addproImage" ref="profileInput" type="file" accept="image/*" @input="selectproImgFile">
         <b-row class="row1">
             <h6>Nickname</h6>
         </b-row>
@@ -71,9 +71,9 @@ export default {
         }
       }
     },
-    selectImgFile () {
-      let fileInput = this.$refs.fileInput
-      let imgFile = fileInput.files
+    selectproImgFile () {
+      let profileInput = this.$refs.profileInput
+      let imgFile = profileInput.files
 
       if (imgFile && imgFile[0]) {
         let reader = new FileReader()
@@ -83,7 +83,7 @@ export default {
           this.imgRef = imageUrl
         }
         reader.readAsDataURL(imgFile[0])
-        this.$emit('fileInput', imgFile[0])
+        this.$emit('profileInput', imgFile[0])
       }
     }
   }
@@ -162,9 +162,10 @@ h2 {
 .nameInput {
     margin-bottom: 1px;
 }
-#addImage {
+#addproImage {
   width: 0px;
   visibility: hidden;
+  margin-bottom: 6px;
 }
 .addBtn {
     font-size: 27px;

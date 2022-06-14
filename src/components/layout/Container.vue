@@ -3,9 +3,10 @@
     <button v-if="this.userSigned" class="btn-logout" @click="signOut()">logout</button>
     <div class="sub-container1">
       <div class="sub-container2">
+        <img thumbnail src="../../assets/myworldLogo.png" alt="Logo Image" class="logo"/>
         <div class="column-box">
           <ProfileVue class="box left" v-if="this.userSigned" v-on:pass="dateSelect"/>
-          <div class="box left" v-else>null user : Login!</div>
+          <div class="box left" v-else></div>
           <router-view class="box middle" v-bind:props="date"/>
           <div class="right">
             <button id="diaryTab" class="tab active"
@@ -144,8 +145,10 @@ export default {
 }
 .btn-logout {
   position: absolute;
-  right: 20px;
+  right: 10px;
   top: 10px;
+  padding: 3px 8px;
+  border-bottom: 1px solid #565656;
 }
 .column-box {
   display: flex;
@@ -209,5 +212,10 @@ export default {
 }
 .active {
   background-color: #ffffff;
+}
+.logo {
+  width: 200px;
+  margin-bottom: 79vh;
+  margin-left: 17px;
 }
 </style>
