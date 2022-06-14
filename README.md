@@ -107,7 +107,14 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
 ## 3. Organization of the Code
 ### 1) Front-end
 ### 2) Back-end
-### 3) Diagram
+- **Authentication**
+  - Because this is private diary, users should make their own account. You can use valid format email address and password, which managed by firebase authentication. When an account is created, a UID is given. In our service, this UID is stored in local storage and is a major factor in authenticating users.
+- **Realtime Database**
+  - Database is structured into 4 categories: `users`, `diary`, `todo`, `memo`. Each category has a sublayer classified by UID.
+- **Storage**
+  - For diary's drawing and user profile image, we used firebase storage to save them. After uploading the image file, we saved its url into the db and loaded it later.
+### 3) DB Structure
+<p align="center"><img src="./src/assets//readme/DB-diagram.png" alt="memo" height="400"/></p>
 
 ## 4. Issue
 ### 1) Special Features
@@ -171,7 +178,7 @@ All 3 team members were new to Vue. The followings are what we studied and used 
 - etc
 
 ### 2) Firebase
-***MyWorld*** is a serverless web application uses only database which is a Firebase Realtime DB. Firebase db uses NoSQL, JSON type script. We used it for basic CRUD functionalitis and also used Firebase Storage to store images. Also, for user signin and signup, we used Firebase Authentication especially the email method.
+***MyWorld*** is a serverless web application uses database which is a Firebase Realtime DB. Firebase db uses NoSQL, JSON type script. We used it for basic CRUD functionalitis and also used Firebase Storage to store images. Also, for user signin and signup, we used Firebase Authentication especially the email method. Finally, deployed this web app using Firebase hosting.
 
 ### 3) Responsive Web Design
 _Responsive Web Design_ is about using HTML and CSS to automatically resize, hide, shrink, or enlarge, a website, to make it look good on all devices. We make ***My World*** a responsive web to allow the user to see whole thing regardless of the size or proportion of the display. So when you change the size of the window, most elements are resized and relocated.
