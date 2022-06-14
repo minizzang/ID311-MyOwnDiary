@@ -47,7 +47,7 @@ export default {
       userName: '',
       userIntro: '',
       userImg: '',
-      isEditProfile: true,
+      isEditProfile: false,
       pickerDate: new Date().toISOString().substring(0, 10),
       savedDayArray: null,
       savedDayMoodMap: null
@@ -77,6 +77,7 @@ export default {
       onValue(userImgRef, (snapshot) => {
         this.userImg = snapshot.val()
         if (this.userImg == null) {
+          // this.userImg = '../assets/blankProfile.jpg'
           const defaultImgRef = ref(this.$db, 'users/defaultImg')
           onValue(defaultImgRef, (snapshot1) => {
             this.userImg = snapshot1.val()

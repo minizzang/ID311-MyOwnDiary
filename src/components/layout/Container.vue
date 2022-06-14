@@ -46,9 +46,9 @@ export default {
   mounted () {
     const uid = localStorage.getItem('user')
     uid !== null ? this.userSigned = true : this.userSigned = false
-    if (this.userSigned) {
-      this.path = '/diary'
-      return router.replace(this.path)
+    this.path = '/diary'
+    if (this.userSigned && (router.currentRoute.path !== this.path)) {
+      router.replace(this.path)
     }
 
     // convert to Korea time zone
