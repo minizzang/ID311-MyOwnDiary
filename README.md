@@ -123,6 +123,8 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
     - `Todo`
       - You can pick the date before adding the to-do thing.
   - Features were descripted more in detail in the [2. Description of the Application](#2-description-of-the-application). 
+- **Web Page Icon & Title**
+  - On the top of the window opening our application, you can see the tab with the icon of ***My World*** and the title "myworld".
 ### 2) Known Bugs
 - `Welcome_KAIST` Connecting Problem
   - A very weird thing happens when we connect the wi-fi `Welcome_KAIST` provided by KAIST and visit the application. You can't save the diary! It keeps making timeout only to fail. However, using other wi-fi or your own hotspot, it works normally again. We tried to fix this bug, but finally we decided that this wan't our problem, but `Welcome_KAIST`'s.
@@ -184,4 +186,4 @@ Still, there are some issues with the layout. It doesn't fit that well if you sh
 - [Vuetify](https://vuetifyjs.com/en/)
 - [Fabric](http://fabricjs.com/)
 - [W3Schools](https://www.w3schools.com/default.asp)
-- [Webkit](https://webkit.org/)
+- [WebKit](https://webkit.org/)
