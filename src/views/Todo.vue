@@ -13,71 +13,84 @@
 import TodoInput from './TodoInput'
 import TodoList from './TodoList'
 import TodoFooter from './TodoFooter'
+import {onValue, push, ref, remove, update} from '@firebase/database'
 export default {
   props: ['props'],
-  data () {
-    return {
-      todoItemsWithDate: [],
-      temp: 1
-    }
-  },
   components: {
     'TodoInput': TodoInput,
     'TodoList': TodoList,
     'TodoFooter': TodoFooter
   },
-  methods: {
-    created () {
-      // firebase 연동
+  data () {
+    return {
+      uid: '',
+      todoItemsWithDate: [],
+      temp: 1
+    }
+  },
+  mounted () {
+    this.uid = localStorage.getItem('user')
+
+    // get todo list from firebase db
+    const todoRef = ref(this.$db, 'todo/' + this.uid)
+    onValue(todoRef, (snapshot) => {
       this.todoItemsWithDate = []
-    },
+      const todoData = snapshot.val()
+      if (todoData != null) {
+        Object.keys(todoData).forEach((date) => {
+          const tempTodoItems = []
+          Object.keys(todoData[date]).forEach((todoKey) => {
+            const data = todoData[date][todoKey]
+            const item = {
+              key: todoKey,
+              text: data.text,
+              checked: data.checked
+            }
+            if (data.checked) { // add item as last element
+              tempTodoItems.push(item)
+            } else { // add item as first element
+              tempTodoItems.unshift(item)
+            }
+          })
+          const dateItem = {
+            date: date,
+            todoItems: tempTodoItems
+          }
+          this.todoItemsWithDate.push(dateItem)
+        })
+      }
+    })
+  },
+  methods: {
     addTodo (todoItem) {
-      let item = {
+      // store to firebase db
+      push(ref(this.$db, 'todo/' + this.uid + '/' + this.props + '/'), {
         text: todoItem,
         checked: false
-      }
-      for (let i = 0; i < this.todoItemsWithDate.length; i++) {
-        if (this.props === this.todoItemsWithDate[i].date) {
-          for (let j = 0; j < this.todoItemsWithDate[i].todoItems.length; j++) {
-            if (this.todoItemsWithDate[i].todoItems[j].text === todoItem) {
-              alert('Already exist Todo!')
-              return
-            }
-          }
-          this.todoItemsWithDate[i].todoItems.push(item)
-          return
-        }
-      }
-      let dateItem = {
-        date: this.props,
-        todoItems: [item]
-      }
-      this.todoItemsWithDate.push(dateItem)
-      this.sortTodo()
-      console.log(this.todoItemsWithDate.length)
+      }).catch((err) => console.log(err))
     },
     checkTodo (index, index2) {
-      let item = this.todoItemsWithDate[index].todoItems[index2]
-      item.checked = !item.checked
-      this.todoItemsWithDate[index].todoItems.splice(index2, 1)
-      if (item.checked) {
-        this.todoItemsWithDate[index].todoItems.push(item)
-      } else {
-        this.todoItemsWithDate[index].todoItems.unshift(item)
-      }
+      // update checked value
+      const targetDate = this.todoItemsWithDate[index].date
+      const targetItem = this.todoItemsWithDate[index].todoItems[index2]
+
+      update(ref(this.$db, 'todo/' + this.uid + '/' + targetDate + '/' + targetItem.key), {
+        checked: !targetItem.checked
+      }).catch((err) => console.log(err))
     },
     removeTodo (todoItem, index, index2) {
-      // firebase 연동 부분
-      this.todoItemsWithDate[index].todoItems.splice(index2, 1)
-      if (this.todoItemsWithDate[index].todoItems.length === 0) {
-        this.todoItemsWithDate.splice(index, 1)
-      }
+      // delete todo in db
+      const targetDate = this.todoItemsWithDate[index].date
+      const targetItem = this.todoItemsWithDate[index].todoItems[index2]
+
+      remove(ref(this.$db, 'todo/' + this.uid + '/' + targetDate + '/' + targetItem.key))
     },
     sortTodo () {
       this.todoItemsWithDate.sort((a, b) => a.date > b.date ? 1 : -1)
     },
     clearAll () {
       // firebase 연동 부분
+      remove(ref(this.$db, 'todo/' + this.uid))
       this.todoItemsWithDate = []
     }
   }

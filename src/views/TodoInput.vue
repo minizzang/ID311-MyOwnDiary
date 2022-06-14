@@ -1,7 +1,7 @@
 <template>
   <div class="inputContainer">
     <input id="inputBox" type="text" v-model="InputTodoItem" placeholder="Pick the date and type!"
-           v-on:keyup.enter="addTodo">
+           v-on:keyup.enter="addTodo" autocomplete="off">
     <button class="addButton" @click="addTodo">+</button>
   </div>
 </template>
