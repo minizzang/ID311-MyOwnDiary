@@ -8,14 +8,14 @@
           <div class="box left" v-else>null user : Login!</div>
           <router-view class="box middle" v-bind:props="date"/>
           <div class="right">
-            <button class="tab active"
-              @click="path = '/diary'; routeTab; setClicked($event)" active
+            <button id="diaryTab" class="tab active"
+              @click="path = '/diary'; routeTab;" active
             >Diary</button>
-            <button class="tab"
-              @click="path = '/todo'; routeTab; setClicked($event)"
+            <button id="todoTab" class="tab"
+              @click="path = '/todo'; routeTab;"
             >Todo</button>
-            <button class="tab"
-              @click="path = '/memo'; routeTab; setClicked($event)"
+            <button id="memoTab" class="tab"
+              @click="path = '/memo'; routeTab;"
             >Memo</button>
           </div>
           <div class="ring ring1"/>
@@ -62,6 +62,7 @@ export default {
       } else if (to.name === 'Login') { // Logout
         this.userSigned = false
       }
+      this.activateTab(to.name)
     }
   },
   computed: {
@@ -74,14 +75,28 @@ export default {
     }
   },
   methods: {
-    setClicked (e) {
+    activateTab (target) {
+      const diary = document.getElementById('diaryTab')
+      const todo = document.getElementById('todoTab')
+      const memo = document.getElementById('memoTab')
+
       const tabs = Array.from(document.getElementsByClassName('tab'))
       tabs.forEach((t) => {
         if (t.classList.contains('active')) {
           t.classList.remove('active')
         }
       })
-      e.target.classList.add('active')
+      switch (target) {
+        case 'Diary':
+          diary.classList.add('active')
+          break
+        case 'Todo':
+          todo.classList.add('active')
+          break
+        case 'Memo':
+          memo.classList.add('active')
+          break
+      }
     },
     dateSelect (val) { // receive date from Profile.vue
       this.date = val

@@ -8,8 +8,12 @@
         <section>
           <transition-group name="list" tag="ul" id="todoUl">
             <li v-for="(todoItem, index2) in todoItemWithDate.todoItems" :key="todoItem.text + index2" id="todoLi">
-              <div id="todoText">
-                <input type="checkbox" id="checkboxInput" v-bind:checked="todoItem.checked" v-on:change="changed(index, index2)">
+              <div id="todoText" :class="{'checked': todoItem.checked === true}">
+                <input
+                  type="checkbox"
+                  id="checkboxInput"
+                  v-bind:checked="todoItem.checked"
+                  v-on:change="changed(index, index2)">
                 {{ todoItem.text }}
                 <span class="removeBtn" type="button" @click="removeTodo(todoItem, index, index2)">
                     <i class="far fa-trash-alt" aria-hidden="true"></i>
@@ -68,11 +72,16 @@ export default {
 }
 
 #todoDate {
+  display: flex;
+  width: 140px;
+  height: 30px;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   font-size: 12px;
   background-color: #6f42c1;
   color: white;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 #todoLi {
@@ -88,7 +97,6 @@ export default {
   height: 50px;
   line-height: 50px;
   padding: 0 0.9rem;
-  background: white;
   align-items: center;
 }
 
@@ -99,5 +107,8 @@ export default {
 .removeBtn {
   margin-left: auto;
   color: #DE4343;
+}
+.checked {
+  background-color: #f5eff8;
 }
 </style>

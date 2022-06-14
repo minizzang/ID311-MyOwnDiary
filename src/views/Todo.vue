@@ -77,15 +77,6 @@ export default {
       update(ref(this.$db, 'todo/' + this.uid + '/' + targetDate + '/' + targetItem.key), {
         checked: !targetItem.checked
       }).catch((err) => console.log(err))
-
-      // let item = this.todoItemsWithDate[index].todoItems[index2]
-      // item.checked = !item.checked
-      // this.todoItemsWithDate[index].todoItems.splice(index2, 1)
-      // if (item.checked) {
-      //   this.todoItemsWithDate[index].todoItems.push(item)
-      // } else {
-      //   this.todoItemsWithDate[index].todoItems.unshift(item)
-      // }
     },
     removeTodo (todoItem, index, index2) {
       // delete todo in db
