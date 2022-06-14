@@ -9,7 +9,7 @@
         </div>
         <input id="addImage" ref="fileInput" type="file" accept="image/*" @input="selectImgFile">
         <b-row class="row1">
-            <h5>Nickname</h5>
+            <h6>Nickname</h6>
         </b-row>
         <b-row class="row1 nameInput">
             <b-form-input v-model="name" :placeholder="name"></b-form-input>
@@ -145,7 +145,7 @@ h2 {
 .saveButton {
   width: 7vh;
   height: 3.5vh;
-  border-radius: 15%;
+  border-radius: 7%;
   background-color: #C3B1E1;
   color: white;
   font-size: 1.7vh;
