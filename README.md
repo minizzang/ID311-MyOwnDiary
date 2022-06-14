@@ -32,7 +32,7 @@
 - **Team Number**: 2
 - **Team Member**: Minhee Kim, Yena Kim, Yumin Cho
 - **URL to Repository**: [Git Repository]()
-- **URL to Demo**: [Application](https://id311-my-world)web)app/)
+- **URL to Demo**: [Application](https://id311-my-world.web.app/)
 - **URL to Video**: [Demo Video]()
 
 ## 2. Description of the Application
@@ -126,7 +126,7 @@ There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, 
   - Features were descripted more in detail in the [2. Description of the Application](#2-description-of-the-application). 
 ### 2) Known Bugs
 - `Welcome_KAIST` Connecting Problem
-  - A very weird thing happens when we connect the wi-fi `Welcome_KAIST` provided by KAIST and visit the application. You can't save the diary! It keeps making timeout only to fail. However, using other wi-fi or your own hotspot, it works normally again. We tried to fix this bug, but finally we decided that this wan't our problem, but `Welcome_KAIST`'s.
+  - A very weird thing happens when we connect the Wi-Fi `Welcome_KAIST` provided by KAIST and visit the application. You can't save the diary! It keeps making timeout when request to firebase storage only to fail. However, using other Wi-Fi or your own hotspot, it works normally again. We tried to fix this bug, but finally we decided that this wan't our problem, but `Welcome_KAIST`'s.
 
 ## 5. Tried Novel Feature & Library & Tool
 ### 1) [Vue](https://vuejs.org/)
@@ -170,13 +170,14 @@ All 3 team members were new to Vue. The followings are what we studied and used 
 - etc
 
 ### 2) Firebase
+***MyWorld*** is a serverless web application uses only database which is a Firebase Realtime DB. Firebase db uses NoSQL, JSON type script. We used it for basic CRUD functionalitis and also used Firebase Storage to store images. Also, for user signin and signup, we used Firebase Authentication especially the email method.
 
 ### 3) Responsive Web Design
-_Responsive Web Design_ is about using HTML and CSS to automatically resize, hide, shrink, or enlarge, a website, to make it look good on all devices. We make ***My World*** a responsive web to allow the user to see whole thing rgardless of the size or proportion of the display. So when you change the size of the window, most elements are resized and relocated.
+_Responsive Web Design_ is about using HTML and CSS to automatically resize, hide, shrink, or enlarge, a website, to make it look good on all devices. We make ***My World*** a responsive web to allow the user to see whole thing regardless of the size or proportion of the display. So when you change the size of the window, most elements are resized and relocated.
 
 ## 7. Improvement Measures
 ### 1) Responsive Web Design
-Still, there are some issues with the layout. It doesn't fit that well if you shrink or enlarge the window. If you the change the size of the system font, some elements overlap each other or escape the parent container. We can fix these problems further.
+Still, there are some issues with the layout. It doesn't fit that well if you shrink or enlarge the window. If you change the size of the system font, some elements overlap each other or escape the parent container. We can fix these problems further.
 
 ## 8. Reference & Helps
 - [cyworld](https://cyworld.com/cyworld/welcome)
