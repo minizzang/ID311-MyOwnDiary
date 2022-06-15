@@ -114,7 +114,7 @@ export default {
   methods: {
     callCanvas () {
       const date = this.date.replace(/-/g, '') // 2022-06-11 -> 20220611
-      this.$refs.canvas.downloadImage(date)
+      this.$refs.canvas.saveImageToStorage(date)
     },
     saveDiary (imageRef) {
       if (!this.title || !this.moodSelected) {

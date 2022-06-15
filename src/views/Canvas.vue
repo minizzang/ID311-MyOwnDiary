@@ -176,8 +176,20 @@ export default {
         this.$emit('fileInput', imgFile[0])
       }
     },
-    downloadImage (date) {
-      const ext = 'png' // todo: background 투명->shadow
+    downloadImage () {
+      console.log('download')
+      const ext = 'png'
+      const base64 = this.canvas.toDataURL({
+        format: ext,
+        enableRetinaScaling: true
+      })
+      const link = document.createElement('a')
+      link.href = base64
+      link.download = `myworld_diary.${ext}`
+      link.click()
+    },
+    saveImageToStorage (date) {
+      const ext = 'png'
       const base64 = this.canvas.toDataURL({
         format: ext,
         enableRetinaScaling: true
