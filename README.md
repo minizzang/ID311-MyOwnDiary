@@ -34,9 +34,9 @@
 ## 1. Basic Info
 - **Team Number**: 2
 - **Team Member**: Minhee Kim, Yena Kim, Yumin Cho
-- **URL to Repository**: [Git Repository]()
+- **URL to Repository**: [Git Repository](http://git.prototyping.id/20190104/ID311-MyWorld)
 - **URL to Demo**: [Application](https://id311-my-world.web.app/)
-- **URL to Video**: [Demo Video]()
+- **URL to Video**: [Demo Video](https://youtu.be/XBmdq3P3SrE)
 
 ## 2. Description of the Application
 There are `5` big pages in ***My World***: `Login`, `Profile`, `Diary`, `Todo`, and `Memo`.
