@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <b-container fluid>
-        <img thumbnail fluid src="../assets/blankProfile.jpg" alt="Profile Image" height="150px" width="150px" class="profile"/>
+        <img thumbnail fluid :src="profileImg" alt="Profile Image" height="150px" width="150px" class="profile"/>
         <div>
             <label for="addproImage" class="addBtn">
                 <font-awesome-icon icon="fa-solid fa-image" class="image-icon center" />
@@ -41,7 +41,8 @@ export default {
     return {
       name: '',
       imgRef: '',
-      intro: ''
+      intro: '',
+      profileImg: require('../assets/blankProfile.jpg')
     }
   },
   mounted () {
@@ -81,6 +82,7 @@ export default {
         reader.onload = e => {
           const imageUrl = e.target.result
           this.imgRef = imageUrl
+          this.profileImg = imageUrl
         }
         reader.readAsDataURL(imgFile[0])
         this.$emit('profileInput', imgFile[0])
